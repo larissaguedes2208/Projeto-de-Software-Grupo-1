@@ -6,42 +6,40 @@ Created on Fri Mar 20 07:14:12 2026
 @author: larissaguedes
 """
 
-def soma(a, b):
-    return a + b
+def soma(x, y):
+    return x + y
 
 
-def subtracao(a, b):
-    return a - b
+def subtracao(x, y):
+    return x - y
 
 
-def multiplicacao(a, b):
-    return a * b
+def multiplicacao(x, y):
+    return x * y
 
 
-def divisao(a, b):
-    if b == 0:
+def divisao(x, y):
+    if y == 0:
         return "Erro: divisão por zero"
-    return a / b
+    return x / y
 
-
-print("=== CALCULADORA ===")
-print("1 - Soma")
-print("2 - Subtração")
-print("3 - Multiplicação")
-print("4 - Divisão")
+print("Soma")
+print("Subtração")
+print("Multiplicação")
+print("Divisão")
 
 opcao = input("Escolha uma operação: ")
 
-a = float(input("Digite o primeiro número: "))
-b = float(input("Digite o segundo número: "))
+x = float(input("Informe o primeiro número: "))
+y = float(input("Informe o segundo número: "))
 
-if opcao == "1":
-    print("Resultado:", soma(a, b))
-elif opcao == "2":
-    print("Resultado:", subtracao(a, b))
-elif opcao == "3":
-    print("Resultado:", multiplicacao(a, b))
-elif opcao == "4":
-    print("Resultado:", divisao(a, b))
+if opcao == "Soma":
+    print("Resultado:", soma(x, y))
+elif opcao == "Subtração":
+    print("Resultado:", subtracao(x, y))
+elif opcao == "Multiplicação":
+    print("Resultado:", multiplicacao(x, y))
+elif opcao == "Divisão":
+    print("Resultado:", divisao(x, y))
 else:
-    print("Opção inválida")
+    print("Opção inexistente")
