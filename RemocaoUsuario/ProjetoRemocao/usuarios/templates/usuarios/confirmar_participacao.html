@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Participação - PlayMatch</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef5f7;
+            color: #111;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #205e9e;
+            color: white;
+            padding: 35px 20px 110px;
+        }
+
+        .header-content {
+            max-width: 520px;
+            margin: auto;
+        }
+
+        .back {
+            font-weight: bold;
+            margin-bottom: 28px;
+            display: inline-block;
+        }
+
+        .sport-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ball {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: white;
+            color: #205e9e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+        .container {
+            max-width: 520px;
+            margin: -75px auto 90px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.16);
+            margin-bottom: 24px;
+        }
+
+        .info-line {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #e7f0fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress {
+            height: 8px;
+            background: #e5e5e5;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress div {
+            height: 100%;
+            width: 80%;
+            background: #205e9e;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 16px;
+            background: #f45a16;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            margin-bottom: 16px;
+        }
+
+        .players {
+            margin-top: 25px;
+        }
+
+        .player {
+            background: white;
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-content">
+            <span class="back">← Voltar</span>
+
+            <div class="sport-title">
+                <div class="ball">⚽</div>
+                <div>
+                    <h1>Futebol</h1>
+                    <p>Intermediário</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <div class="info-line">
+                <div class="circle">📍</div>
+                <div>
+                    <strong>Local</strong>
+                    <p>Quadra do Leblon</p>
+                </div>
+            </div>
+
+            <div class="info-line">
+                <div class="circle">🕒</div>
+                <div>
+                    <strong>Data e horário</strong>
+                    <p>Sábado, 14 de março às 19:00</p>
+                </div>
+            </div>
+
+            <div class="info-line">
+                <div class="circle">👥</div>
+                <div>
+                    <strong>Jogadores</strong>
+                    <p>8/10 confirmados</p>
+                </div>
+            </div>
+
+            <div class="progress">
+                <div></div>
+            </div>
+        </div>
+
+        <button>Confirmar participação</button>
+
+        <section class="players">
+            <h2>Jogadores confirmados</h2>
+
+            <div class="player">João Silva — Organizador</div>
+            <div class="player">Maria Santos</div>
+            <div class="player">Pedro Costa</div>
+            <div class="player">Ana Lima</div>
+        </section>
+    </main>
+
+</body>
+</html>

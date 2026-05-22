@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Partida - PlayMatch</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef5f7;
+            min-height: 100vh;
+            color: #111;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #205e9e 0%, #f45a16 100%);
+            color: white;
+            padding: 40px 20px 110px;
+        }
+
+        .header-content {
+            max-width: 520px;
+            margin: auto;
+        }
+
+        .back {
+            font-weight: bold;
+            margin-bottom: 28px;
+            display: inline-block;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 520px;
+            margin: -70px auto 80px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.16);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid #ddd;
+            background: #f4f4f6;
+            font-size: 15px;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .row div {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 28px;
+            padding: 15px;
+            border: none;
+            border-radius: 14px;
+            background: #205e9e;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+        }
+
+        .btn-orange {
+            background: #f45a16;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-content">
+            <span class="back">← Voltar</span>
+            <h1>Editar Partida ⚽</h1>
+            <p>Atualize os dados do jogo</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <form>
+                <label>Esporte</label>
+                <input type="text" value="Futebol">
+
+                <label>Local</label>
+                <input type="text" value="Quadra do Leblon">
+
+                <div class="row">
+                    <div>
+                        <label>Data</label>
+                        <input type="date" value="2026-03-14">
+                    </div>
+
+                    <div>
+                        <label>Horário</label>
+                        <input type="time" value="19:00">
+                    </div>
+                </div>
+
+                <label>Número máximo de jogadores</label>
+                <input type="number" value="10">
+
+                <label>Status da partida</label>
+                <select>
+                    <option>Aberta</option>
+                    <option>Lotada</option>
+                    <option>Cancelada</option>
+                    <option>Finalizada</option>
+                </select>
+
+                <button type="submit">Salvar alterações</button>
+                <button type="button" class="btn-orange">Cancelar partida</button>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

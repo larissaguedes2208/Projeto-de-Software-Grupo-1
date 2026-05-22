@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Partidas - PlayMatch</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef5f7;
+            color: #111;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 64px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .page {
+            max-width: 760px;
+            margin: 35px auto 90px;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 34px;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 28px;
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 30px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+            background: transparent;
+        }
+
+        .filters {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            margin-bottom: 28px;
+        }
+
+        .filters button {
+            border: none;
+            background: white;
+            padding: 12px 22px;
+            border-radius: 24px;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        }
+
+        .filters button.active {
+            background: #205e9e;
+            color: white;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 22px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+        }
+
+        .result-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e7f0fb;
+            color: #205e9e;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .orange {
+            background: #fff0e8;
+            color: #f45a16;
+        }
+
+        .btn {
+            display: block;
+            background: #205e9e;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div class="logo">⚽ PlayMatch</div>
+        <strong>JS</strong>
+    </header>
+
+    <main class="page">
+
+        <h1>Buscar partidas 🔎</h1>
+        <p class="subtitle">Encontre jogos por esporte, local ou horário</p>
+
+        <div class="search-box">
+            🔍
+            <input type="text" placeholder="Buscar por futebol, vôlei, Leblon...">
+        </div>
+
+        <div class="filters">
+            <button class="active">Todos</button>
+            <button>Futebol</button>
+            <button>Vôlei</button>
+            <button>Basquete</button>
+        </div>
+
+        <section class="result-card">
+            <span class="badge">2 vagas</span>
+            <h2>⚽ Futebol</h2>
+            <p>📍 Quadra do Leblon</p>
+            <p>🕒 Hoje às 19:00</p>
+            <p>👥 8/10 jogadores confirmados</p>
+            <a href="/usuarios/confirmar-participacao/" class="btn">Ver partida</a>
+        </section>
+
+        <section class="result-card">
+            <span class="badge orange">Aberta</span>
+            <h2>🏀 Basquete</h2>
+            <p>📍 Quadra do Flamengo</p>
+            <p>🕒 Amanhã às 17:00</p>
+            <p>👥 4/10 jogadores confirmados</p>
+            <a href="/usuarios/confirmar-participacao/" class="btn">Ver partida</a>
+        </section>
+
+    </main>
+
+</body>
+</html>
