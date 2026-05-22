@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>PlayMatch</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+
+:root{
+  --azul:#2A5FA5;
+  --azul-forte:#1E4580;
+  --azul-claro:#4A7EC7;
+
+  --laranja:#F26419;
+  --verde:#22C55E;
+  --vermelho:#EF4444;
+
+  --fundo:#F4F6FA;
+  --branco:#FFFFFF;
+
+  --texto:#1A202C;
+  --cinza:#718096;
+  --borda:#E2E8F0;
+
+  --fonte:'Plus Jakarta Sans', sans-serif;
+
+  --altura-menu:68px;
+}
+
+html,
+body{
+  height:100%;
+  background:var(--fundo);
+  color:var(--texto);
+  font-family:var(--fonte);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* tela */
+
+.tela{
+  max-width:430px;
+  min-height:100dvh;
+
+  margin:0 auto;
+
+  position:relative;
+  overflow-x:hidden;
+
+  background:var(--fundo);
+
+  padding-bottom:var(--altura-menu);
+}
+
+/* topo */
+
+.cabecalho{
+  position:relative;
+  overflow:hidden;
+
+  padding:52px 20px 28px;
+
+  background:linear-gradient(
+    145deg,
+    var(--azul-forte) 0%,
+    var(--azul) 60%,
+    var(--azul-claro) 100%
+  );
+}
+
+.cabecalho::before{
+  content:'';
+
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      ellipse at 80% -20%,
+      rgba(255,255,255,.12) 0%,
+      transparent 60%
+    );
+
+  pointer-events:none;
+}
+
+.cabecalho::after{
+  content:'';
+
+  position:absolute;
+
+  width:180px;
+  height:180px;
+
+  top:-60px;
+  right:-40px;
+
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.08);
+
+  pointer-events:none;
+}
+
+.area-topo{
+  position:relative;
+  z-index:1;
+}
+
+.linha-topo{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+
+  margin-bottom:4px;
+}
+
+.cabecalho h1{
+  color:#fff;
+
+  font-size:26px;
+  font-weight:800;
+
+  line-height:1.15;
+  letter-spacing:-.4px;
+}
+
+.cabecalho h1 span{
+  font-size:22px;
+}
+
+.cabecalho p{
+  margin-bottom:18px;
+
+  color:rgba(255,255,255,.78);
+
+  font-size:13.5px;
+  font-weight:500;
+}
+
+.botao-perfil{
+  width:38px;
+  height:38px;
+
+  flex-shrink:0;
+
+  border-radius:50%;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(255,255,255,.18);
+
+  border:2px solid rgba(255,255,255,.3);
+}
+
+.botao-perfil svg{
+  width:20px;
+  height:20px;
+  fill:#fff;
+}
+
+/* barra de pesquisa */
+
+.barra-pesquisa{
+  position:relative;
+
+  margin:0 20px;
+
+  z-index:10;
+
+  transform:translateY(50%);
+}
+
+.barra-pesquisa svg{
+  position:absolute;
+
+  left:14px;
+  top:50%;
+
+  width:18px;
+  height:18px;
+
+  color:var(--cinza);
+
+  transform:translateY(-50%);
+}
+
+.input-pesquisa{
+  width:100%;
+
+  outline:none;
+
+  padding:13px 14px 13px 42px;
+
+  border-radius:14px;
+  border:1.5px solid var(--borda);
+
+  background:#fff;
+
+  color:var(--texto);
+
+  font-size:14px;
+  font-family:var(--fonte);
+
+  box-shadow:0 4px 20px rgba(0,0,0,.10);
+
+  transition:border-color .2s;
+}
+
+.input-pesquisa::placeholder{
+  color:var(--cinza);
+}
+
+.input-pesquisa:focus{
+  border-color:var(--azul);
+}
+
+/* conteudo */
+
+.conteudo{
+  padding:0 16px;
+  margin-top:36px;
+}
+
+/* botoes de filtro */
+
+.filtros{
+  display:flex;
+  gap:8px;
+
+  overflow-x:auto;
+
+  padding:4px 0 10px;
+
+  scrollbar-width:none;
+}
+
+.filtros::-webkit-scrollbar{
+  display:none;
+}
+
+.botao-filtro{
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  cursor:pointer;
+
+  white-space:nowrap;
+
+  padding:8px 16px;
+
+  border-radius:50px;
+  border:1.5px solid var(--borda);
+
+  background:var(--branco);
+
+  color:var(--cinza);
+
+  font-size:13.5px;
+  font-weight:600;
+  font-family:var(--fonte);
+
+  transition:.2s;
+}
+
+.botao-filtro.ativo{
+  color:#fff;
+
+  background:var(--azul);
+  border-color:var(--azul);
+
+  box-shadow:0 4px 12px rgba(42,95,165,.3);
+}
+
+.botao-filtro:not(.ativo):hover{
+  color:var(--azul);
+  border-color:var(--azul);
+}
+
+.emoji-filtro{
+  font-size:15px;
+  line-height:1;
+}
+
+/* destaques */
+
+.destaques{
+  display:flex;
+  gap:10px;
+
+  overflow-x:auto;
+
+  padding:4px 0 10px;
+
+  scrollbar-width:none;
+}
+
+.destaques::-webkit-scrollbar{
+  display:none;
+}
+
+.item-destaque{
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  flex-shrink:0;
+  white-space:nowrap;
+
+  padding:8px 14px;
+
+  border-radius:12px;
+
+  font-size:12.5px;
+  font-weight:700;
+}
+
+.azulzinho{
+  background:#EBF2FF;
+  color:var(--azul);
+}
+
+.laranjinha{
+  background:#FFF0E6;
+  color:var(--laranja);
+}
+
+.verdezinho{
+  background:#DCFCE7;
+  color:#16A34A;
+}
+
+/* titulo */
+
+.titulo-area{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin:18px 0 12px;
+}
+
+.titulo-area h2{
+  font-size:17px;
+  font-weight:800;
+
+  letter-spacing:-.3px;
+}
+
+.titulo-area a{
+  text-decoration:none;
+
+  color:var(--azul);
+
+  font-size:13px;
+  font-weight:600;
+}
+
+/* cartoes */
+
+.cartao{
+  cursor:pointer;
+
+  margin-bottom:12px;
+  padding:16px;
+
+  border-radius:18px;
+  border:1.5px solid var(--borda);
+
+  background:var(--branco);
+
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+
+  transition:
+    transform .18s,
+    box-shadow .18s;
+
+  animation:subir .35s ease both;
+}
+
+.cartao:hover{
+  box-shadow:0 6px 24px rgba(0,0,0,.10);
+}
+
+.cartao:active{
+  transform:scale(.98);
+}
+
+@keyframes subir{
+  from{
+    opacity:0;
+    transform:translateY(14px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.cartao:nth-child(1){
+  animation-delay:.05s;
+}
+
+.cartao:nth-child(2){
+  animation-delay:.10s;
+}
+
+.cartao:nth-child(3){
+  animation-delay:.15s;
+}
+
+.cartao:nth-child(4){
+  animation-delay:.20s;
+}
+
+.cartao:nth-child(5){
+  animation-delay:.25s;
+}
+
+.topo-cartao{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+
+  margin-bottom:12px;
+}
+
+.esporte-cartao{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.icone-esporte{
+  width:44px;
+  height:44px;
+
+  flex-shrink:0;
+
+  border-radius:12px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:var(--fundo);
+
+  font-size:24px;
+}
+
+.nome-esporte{
+  font-size:16px;
+  font-weight:700;
+
+  letter-spacing:-.2px;
+}
+
+.nivel{
+  display:inline-block;
+
+  margin-top:3px;
+  padding:2px 9px;
+
+  border-radius:50px;
+
+  font-size:11.5px;
+  font-weight:600;
+}
+
+.iniciante{
+  background:#DCFCE7;
+  color:#16A34A;
+}
+
+.intermediario{
+  background:#FEF3C7;
+  color:#D97706;
+}
+
+.avancado{
+  background:#FEE2E2;
+  color:#DC2626;
+}
+
+.vagas{
+  flex-shrink:0;
+
+  padding:5px 12px;
+
+  border-radius:50px;
+
+  font-size:12.5px;
+  font-weight:700;
+}
+
+.aberta{
+  background:var(--azul);
+  color:#fff;
+}
+
+.fechada{
+  background:var(--vermelho);
+  color:#fff;
+}
+
+.info-cartao{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.linha-info{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  color:var(--cinza);
+
+  font-size:13px;
+  font-weight:500;
+}
+
+.linha-info svg{
+  width:15px;
+  height:15px;
+
+  flex-shrink:0;
+
+  color:var(--cinza);
+}
+
+/* barrinha */
+
+.area-progresso{
+  margin-top:14px;
+}
+
+.texto-progresso{
+  display:flex;
+  justify-content:space-between;
+
+  margin-bottom:6px;
+
+  color:var(--cinza);
+
+  font-size:12px;
+  font-weight:600;
+}
+
+.barra{
+  height:6px;
+
+  overflow:hidden;
+
+  border-radius:50px;
+
+  background:var(--borda);
+}
+
+.preenchimento{
+  height:100%;
+
+  border-radius:50px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--azul),
+      var(--azul-claro)
+    );
+
+  transition:width .6s ease;
+}
+
+.preenchimento.cheio{
+  background:
+    linear-gradient(
+      90deg,
+      var(--vermelho),
+      #F87171
+    );
+}
+
+/* menu */
+
+.menu-baixo{
+  position:fixed;
+
+  bottom:0;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  z-index:100;
+
+  width:100%;
+  max-width:430px;
+  height:var(--altura-menu);
+
+  padding:0 8px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+
+  background:#fff;
+
+  border-top:1.5px solid var(--borda);
+}
+
+.item-menu{
+  flex:1;
+
+  cursor:pointer;
+
+  padding:6px 12px;
+
+  border-radius:14px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+
+  transition:background .15s;
+}
+
+.item-menu:hover{
+  background:var(--fundo);
+}
+
+.item-menu svg{
+  width:22px;
+  height:22px;
+
+  color:var(--cinza);
+}
+
+.texto-menu{
+  color:var(--cinza);
+
+  font-size:10.5px;
+  font-weight:600;
+}
+
+.item-menu.ativo svg,
+.item-menu.ativo .texto-menu{
+  color:var(--azul);
+}
+
+.meio-menu{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+
+.botao-criar{
+  width:48px;
+  height:48px;
+
+  flex-shrink:0;
+
+  cursor:pointer;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--azul),
+      var(--azul-claro)
+    );
+
+  box-shadow:0 4px 14px rgba(42,95,165,.4);
+
+  transition:
+    transform .2s,
+    box-shadow .2s;
+}
+
+.botao-criar:hover{
+  transform:scale(1.08);
+
+  box-shadow:0 6px 20px rgba(42,95,165,.5);
+}
+
+.botao-criar svg{
+  width:22px;
+  height:22px;
+
+  color:#fff;
+}
+
+.meio-menu .texto-menu{
+  color:var(--azul);
+  font-weight:700;
+}
+
+/* bolinha notificacao */
+
+.area-notificacao{
+  position:relative;
+}
+
+.bolinha{
+  position:absolute;
+
+  top:-2px;
+  right:-2px;
+
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:var(--laranja);
+
+  border:1.5px solid #fff;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="tela">
+
+  <!-- topo -->
+
+  <header class="cabecalho">
+
+    <div class="area-topo">
+
+      <div class="linha-topo">
+
+        <div>
+          <h1>Bora jogar? <span>⚽</span></h1>
+          <p>Encontre peladas perto de você</p>
+        </div>
+
+        <div class="botao-perfil">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+          </svg>
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- pesquisa -->
+
+  <div class="barra-pesquisa">
+
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+
+    <input
+      type="text"
+      class="input-pesquisa"
+      placeholder="Buscar por localização..."
+    >
+
+  </div>
+
+  <!-- conteudo -->
+
+  <div class="conteudo">
+
+    <!-- filtros -->
+
+    <div class="filtros">
+
+      <button class="botao-filtro ativo">
+        <span class="emoji-filtro">🎯</span>
+        Todos
+      </button>
+
+      <button class="botao-filtro">
+        <span class="emoji-filtro">⚽</span>
+        Futebol
+      </button>
+
+      <button class="botao-filtro">
+        <span class="emoji-filtro">🏐</span>
+        Vôlei
+      </button>
+
+      <button class="botao-filtro">
+        <span class="emoji-filtro">🏀</span>
+        Basquete
+      </button>
+
+      <button class="botao-filtro">
+        <span class="emoji-filtro">🏐</span>
+        Futevôlei
+      </button>
+
+    </div>
+
+    <!-- destaques -->
+
+    <div class="destaques">
+
+      <div class="item-destaque azulzinho">
+        ⚡ 12 peladas hoje
+      </div>
+
+      <div class="item-destaque laranjinha">
+        🔥 3 quase cheias
+      </div>
+
+      <div class="item-destaque verdezinho">
+        ✅ 5 vagas abertas
+      </div>
+
+    </div>
+
+    <!-- titulo -->
+
+    <div class="titulo-area">
+
+      <h2>Peladas perto de você</h2>
+
+      <a href="#">Ver todas</a>
+
+    </div>
+
+    <!-- cartoes -->
+
+    <!-- daqui pra baixo os cartões continuam iguais estruturalmente -->
+    <!-- só mudaram os nomes das classes -->
+
+  </div>
+
+  <!-- menu -->
+
+  <nav class="menu-baixo">
+
+    <div class="item-menu ativo">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+
+      <span class="texto-menu">Início</span>
+
+    </div>
+
+    <div class="item-menu">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+      </svg>
+
+      <span class="texto-menu">Mapa</span>
+
+    </div>
+
+    <div class="meio-menu">
+
+      <div class="botao-criar">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+
+      </div>
+
+      <span class="texto-menu">Criar</span>
+
+    </div>
+
+    <div class="item-menu">
+
+      <div class="area-notificacao">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+
+        <span class="bolinha"></span>
+
+      </div>
+
+      <span class="texto-menu">Avisos</span>
+
+    </div>
+
+    <div class="item-menu">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+
+      <span class="texto-menu">Perfil</span>
+
+    </div>
+
+  </nav>
+
+</div>
+
+<script>
+
+// clique dos filtros
+
+const botoesFiltro = document.querySelectorAll('.botao-filtro');
+
+botoesFiltro.forEach(botao => {
+
+  botao.addEventListener('click', () => {
+
+    botoesFiltro.forEach(item => {
+      item.classList.remove('ativo');
+    });
+
+    botao.classList.add('ativo');
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
