@@ -355,11 +355,13 @@
 
     </main>
 
+
     <nav class="bottom-nav">
-        <a href="#" class="active">Início</a>
-        <a href="#">Mapa</a>
-        <a href="#">Criar</a>
-        <a href="#">Perfil</a>
+        <a href="{% url 'listar_partidas' %}">Início</a>
+        <a href="{% url 'buscar_partidas' %}">Buscar</a>
+        <a href="{% url 'editar_partida' %}">Criar</a>
+        <a href="{% url 'editar_usuario' %}">Perfil</a>
+        <a href="{% url 'confirmar_participacao' %}">Ver partida</a>
     </nav>
 
 </body>
