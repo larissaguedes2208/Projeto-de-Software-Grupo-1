@@ -33,8 +33,8 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ─── MOBILE SHELL ─── */
-  .shell {
+  /* tela principal */
+  .tela {
     max-width: 430px;
     margin: 0 auto;
     min-height: 100dvh;
@@ -44,22 +44,22 @@
     padding-bottom: var(--nav-h);
   }
 
-  /* ─── HEADER ─── */
-  .header {
+  /* cabecalho */
+  .cabecalho {
     background: linear-gradient(145deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-light) 100%);
     padding: 52px 20px 28px;
     position: relative;
     overflow: hidden;
   }
-  .header::before {
+  .cabecalho::before {
     content: '';
     position: absolute;
     inset: 0;
     background: radial-gradient(ellipse at 80% -20%, rgba(255,255,255,.12) 0%, transparent 60%);
     pointer-events: none;
   }
-  /* decorative circles */
-  .header::after {
+  /* circulo decorativo */
+  .cabecalho::after {
     content: '';
     position: absolute;
     width: 180px; height: 180px;
@@ -68,29 +68,29 @@
     top: -60px; right: -40px;
     pointer-events: none;
   }
-  .header-inner { position: relative; z-index: 1; }
+  .topo-interno { position: relative; z-index: 1; }
 
-  .header-top {
+  .linha-topo {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 4px;
   }
-  .header h1 {
+  .cabecalho h1 {
     font-size: 26px;
     font-weight: 800;
     color: #fff;
     letter-spacing: -.4px;
     line-height: 1.15;
   }
-  .header h1 span { font-size: 22px; }
-  .header p {
+  .cabecalho h1 span { font-size: 22px; }
+  .cabecalho p {
     font-size: 13.5px;
     color: rgba(255,255,255,.78);
     font-weight: 500;
     margin-bottom: 18px;
   }
-  .avatar-btn {
+  .botao-avatar {
     width: 38px; height: 38px;
     border-radius: 50%;
     background: rgba(255,255,255,.18);
@@ -99,22 +99,22 @@
     flex-shrink: 0;
     cursor: pointer;
   }
-  .avatar-btn svg { width: 20px; height: 20px; fill: #fff; }
+  .botao-avatar svg { width: 20px; height: 20px; fill: #fff; }
 
-  /* ─── SEARCH BAR ─── */
-  .search-wrap {
+  /* barra de pesquisa */
+  .barra-pesquisa {
     position: relative;
     margin: 0 20px;
     transform: translateY(50%);
     z-index: 10;
   }
-  .search-wrap svg {
+  .barra-pesquisa svg {
     position: absolute;
     left: 14px; top: 50%; transform: translateY(-50%);
     width: 18px; height: 18px;
     color: var(--muted);
   }
-  .search-input {
+  .campo-busca {
     width: 100%;
     padding: 13px 14px 13px 42px;
     border: 1.5px solid var(--border);
@@ -127,25 +127,25 @@
     box-shadow: 0 4px 20px rgba(0,0,0,.10);
     transition: border-color .2s;
   }
-  .search-input::placeholder { color: var(--muted); }
-  .search-input:focus { border-color: var(--blue); }
+  .campo-busca::placeholder { color: var(--muted); }
+  .campo-busca:focus { border-color: var(--blue); }
 
-  /* ─── BODY CONTENT ─── */
-  .content {
+  /* conteudo principal */
+  .conteudo {
     padding: 0 16px;
     margin-top: 36px;
   }
 
-  /* ─── FILTERS ─── */
-  .filters {
+  /* filtros de esporte */
+  .filtros {
     display: flex;
     gap: 8px;
     overflow-x: auto;
     padding: 4px 0 10px;
     scrollbar-width: none;
   }
-  .filters::-webkit-scrollbar { display: none; }
-  .filter-btn {
+  .filtros::-webkit-scrollbar { display: none; }
+  .botao-filtro {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -161,39 +161,39 @@
     cursor: pointer;
     transition: all .2s;
   }
-  .filter-btn.active {
+  .botao-filtro.ativo {
     background: var(--blue);
     border-color: var(--blue);
     color: #fff;
     box-shadow: 0 4px 12px rgba(42,95,165,.3);
   }
-  .filter-btn:not(.active):hover {
+  .botao-filtro:not(.ativo):hover {
     border-color: var(--blue);
     color: var(--blue);
   }
-  .filter-emoji { font-size: 15px; line-height: 1; }
+  .emoji-filtro { font-size: 15px; line-height: 1; }
 
-  /* ─── SECTION TITLE ─── */
-  .section-head {
+  /* titulo da secao */
+  .titulo-secao {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 18px 0 12px;
   }
-  .section-head h2 {
+  .titulo-secao h2 {
     font-size: 17px;
     font-weight: 800;
     letter-spacing: -.3px;
   }
-  .section-head a {
+  .titulo-secao a {
     font-size: 13px;
     font-weight: 600;
     color: var(--blue);
     text-decoration: none;
   }
 
-  /* ─── MATCH CARD ─── */
-  .card {
+  /* cartoes de pelada */
+  .cartao {
     background: var(--card);
     border-radius: 18px;
     padding: 16px;
@@ -202,33 +202,33 @@
     border: 1.5px solid var(--border);
     cursor: pointer;
     transition: transform .18s, box-shadow .18s;
-    animation: fadeUp .35s ease both;
+    animation: subirFade .35s ease both;
   }
-  .card:active { transform: scale(.98); }
-  .card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.10); }
+  .cartao:active { transform: scale(.98); }
+  .cartao:hover { box-shadow: 0 6px 24px rgba(0,0,0,.10); }
 
-  @keyframes fadeUp {
+  @keyframes subirFade {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  .card:nth-child(1) { animation-delay: .05s; }
-  .card:nth-child(2) { animation-delay: .10s; }
-  .card:nth-child(3) { animation-delay: .15s; }
-  .card:nth-child(4) { animation-delay: .20s; }
-  .card:nth-child(5) { animation-delay: .25s; }
+  .cartao:nth-child(1) { animation-delay: .05s; }
+  .cartao:nth-child(2) { animation-delay: .10s; }
+  .cartao:nth-child(3) { animation-delay: .15s; }
+  .cartao:nth-child(4) { animation-delay: .20s; }
+  .cartao:nth-child(5) { animation-delay: .25s; }
 
-  .card-top {
+  .topo-cartao {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 12px;
   }
-  .card-sport {
+  .esporte-info {
     display: flex;
     align-items: center;
     gap: 10px;
   }
-  .sport-icon {
+  .icone-esporte {
     width: 44px; height: 44px;
     border-radius: 12px;
     background: var(--bg);
@@ -236,8 +236,8 @@
     font-size: 24px;
     flex-shrink: 0;
   }
-  .sport-name { font-size: 16px; font-weight: 700; letter-spacing: -.2px; }
-  .level-badge {
+  .nome-esporte { font-size: 16px; font-weight: 700; letter-spacing: -.2px; }
+  .etiqueta-nivel {
     display: inline-block;
     margin-top: 3px;
     padding: 2px 9px;
@@ -245,22 +245,22 @@
     font-size: 11.5px;
     font-weight: 600;
   }
-  .level-iniciante   { background: #DCFCE7; color: #16A34A; }
-  .level-intermediario { background: #FEF3C7; color: #D97706; }
-  .level-avancado    { background: #FEE2E2; color: #DC2626; }
+  .nivel-iniciante      { background: #DCFCE7; color: #16A34A; }
+  .nivel-intermediario  { background: #FEF3C7; color: #D97706; }
+  .nivel-avancado       { background: #FEE2E2; color: #DC2626; }
 
-  .vagas-badge {
+  .etiqueta-vagas {
     padding: 5px 12px;
     border-radius: 50px;
     font-size: 12.5px;
     font-weight: 700;
     flex-shrink: 0;
   }
-  .vagas-open   { background: var(--blue); color: #fff; }
-  .vagas-closed { background: var(--red);  color: #fff; }
+  .vagas-aberta  { background: var(--blue); color: #fff; }
+  .vagas-fechada { background: var(--red);  color: #fff; }
 
-  .card-info { display: flex; flex-direction: column; gap: 7px; }
-  .info-row {
+  .detalhes-cartao { display: flex; flex-direction: column; gap: 7px; }
+  .linha-detalhe {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -268,11 +268,11 @@
     color: var(--muted);
     font-weight: 500;
   }
-  .info-row svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--muted); }
+  .linha-detalhe svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--muted); }
 
-  /* progress bar */
-  .progress-wrap { margin-top: 14px; }
-  .progress-meta {
+  /* barra de progresso */
+  .area-progresso { margin-top: 14px; }
+  .texto-progresso {
     display: flex;
     justify-content: space-between;
     font-size: 12px;
@@ -280,22 +280,22 @@
     color: var(--muted);
     margin-bottom: 6px;
   }
-  .progress-bar {
+  .barra-fundo {
     height: 6px;
     border-radius: 50px;
     background: var(--border);
     overflow: hidden;
   }
-  .progress-fill {
+  .barra-preenchida {
     height: 100%;
     border-radius: 50px;
     background: linear-gradient(90deg, var(--blue), var(--blue-light));
     transition: width .6s ease;
   }
-  .progress-fill.full { background: linear-gradient(90deg, var(--red), #F87171); }
+  .barra-preenchida.cheia { background: linear-gradient(90deg, var(--red), #F87171); }
 
-  /* ─── BOTTOM NAV ─── */
-  .nav {
+  /* menu inferior */
+  .menu-baixo {
     position: fixed;
     bottom: 0;
     left: 50%;
@@ -311,7 +311,7 @@
     padding: 0 8px;
     z-index: 100;
   }
-  .nav-item {
+  .item-menu {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -322,19 +322,19 @@
     transition: background .15s;
     flex: 1;
   }
-  .nav-item:hover { background: var(--bg); }
-  .nav-item svg { width: 22px; height: 22px; }
-  .nav-label {
+  .item-menu:hover { background: var(--bg); }
+  .item-menu svg { width: 22px; height: 22px; }
+  .rotulo-menu {
     font-size: 10.5px;
     font-weight: 600;
     color: var(--muted);
   }
-  .nav-item.active .nav-label { color: var(--blue); }
-  .nav-item.active svg { color: var(--blue); }
-  .nav-item svg { color: var(--muted); }
+  .item-menu.ativo .rotulo-menu { color: var(--blue); }
+  .item-menu.ativo svg { color: var(--blue); }
+  .item-menu svg { color: var(--muted); }
 
-  /* create btn special */
-  .nav-create {
+  /* botao criar no meio */
+  .botao-criar {
     width: 48px; height: 48px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--blue), var(--blue-light));
@@ -344,14 +344,14 @@
     transition: transform .2s, box-shadow .2s;
     flex-shrink: 0;
   }
-  .nav-create:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(42,95,165,.5); }
-  .nav-create svg { width: 22px; height: 22px; color: #fff; }
-  .nav-center { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .nav-center .nav-label { color: var(--blue); font-weight: 700; }
+  .botao-criar:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(42,95,165,.5); }
+  .botao-criar svg { width: 22px; height: 22px; color: #fff; }
+  .centro-menu { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .centro-menu .rotulo-menu { color: var(--blue); font-weight: 700; }
 
-  /* notification dot */
-  .notif-wrap { position: relative; }
-  .notif-dot {
+  /* notificacao */
+  .icone-notif { position: relative; }
+  .bolinha-notif {
     position: absolute;
     top: -2px; right: -2px;
     width: 8px; height: 8px;
@@ -360,16 +360,16 @@
     border: 1.5px solid #fff;
   }
 
-  /* ─── HORIZONTAL SPORT HIGHLIGHT ─── */
-  .highlights {
+  /* destaques por esporte */
+  .destaques {
     display: flex;
     gap: 10px;
     overflow-x: auto;
     padding: 4px 0 10px;
     scrollbar-width: none;
   }
-  .highlights::-webkit-scrollbar { display: none; }
-  .highlight-pill {
+  .destaques::-webkit-scrollbar { display: none; }
+  .pílula-destaque {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -380,268 +380,265 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .hp-blue   { background: #EBF2FF; color: var(--blue); }
-  .hp-orange { background: #FFF0E6; color: var(--orange); }
-  .hp-green  { background: #DCFCE7; color: #16A34A; }
+  .destaque-azul   { background: #EBF2FF; color: var(--blue); }
+  .destaque-laranja { background: #FFF0E6; color: var(--orange); }
+  .destaque-verde  { background: #DCFCE7; color: #16A34A; }
 </style>
 </head>
 <body>
-<div class="shell">
+<div class="tela">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-inner">
-      <div class="header-top">
+  <!-- cabecalho -->
+  <header class="cabecalho">
+    <div class="topo-interno">
+      <div class="linha-topo">
         <div>
           <h1>Bora jogar? <span>⚽</span></h1>
           <p>Encontre peladas perto de você</p>
         </div>
-        <div class="avatar-btn">
+        <div class="botao-avatar">
           <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
         </div>
       </div>
     </div>
-    <!-- search moved below -->
   </header>
 
-  <!-- SEARCH -->
-  <div class="search-wrap">
+  <!-- pesquisa -->
+  <div class="barra-pesquisa">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
     </svg>
-    <input class="search-input" type="text" placeholder="Buscar por localização...">
+    <input class="campo-busca" type="text" placeholder="Buscar por localização...">
   </div>
 
-  <!-- CONTENT -->
-  <div class="content">
+  <!-- conteudo -->
+  <div class="conteudo">
 
-    <!-- FILTERS -->
-    <div class="filters">
-      <button class="filter-btn active"><span class="filter-emoji">🎯</span> Todos</button>
-      <button class="filter-btn"><span class="filter-emoji">⚽</span> Futebol</button>
-      <button class="filter-btn"><span class="filter-emoji">🏐</span> Vôlei</button>
-      <button class="filter-btn"><span class="filter-emoji">🏀</span> Basquete</button>
-      <button class="filter-btn"><span class="filter-emoji">🏐</span> Futevôlei</button>
+    <!-- filtros -->
+    <div class="filtros">
+      <button class="botao-filtro ativo"><span class="emoji-filtro">🎯</span> Todos</button>
+      <button class="botao-filtro"><span class="emoji-filtro">⚽</span> Futebol</button>
+      <button class="botao-filtro"><span class="emoji-filtro">🏐</span> Vôlei</button>
+      <button class="botao-filtro"><span class="emoji-filtro">🏀</span> Basquete</button>
+      <button class="botao-filtro"><span class="emoji-filtro">🏐</span> Futevôlei</button>
     </div>
 
-    <!-- HIGHLIGHTS -->
-    <div class="highlights">
-      <div class="highlight-pill hp-blue">⚡ 12 peladas hoje</div>
-      <div class="highlight-pill hp-orange">🔥 3 quase cheias</div>
-      <div class="highlight-pill hp-green">✅ 5 vagas abertas</div>
+    <!-- destaques rapidos -->
+    <div class="destaques">
+      <div class="pílula-destaque destaque-azul">⚡ 12 peladas hoje</div>
+      <div class="pílula-destaque destaque-laranja">🔥 3 quase cheias</div>
+      <div class="pílula-destaque destaque-verde">✅ 5 vagas abertas</div>
     </div>
 
-    <!-- SECTION -->
-    <div class="section-head">
+    <!-- titulo -->
+    <div class="titulo-secao">
       <h2>Peladas perto de você</h2>
       <a href="#">Ver todas</a>
     </div>
 
-    <!-- CARDS -->
+    <!-- cartoes -->
 
-    <!-- Card 1: Futebol -->
-    <div class="card">
-      <div class="card-top">
-        <div class="card-sport">
-          <div class="sport-icon">⚽</div>
+    <!-- futebol intermediario -->
+    <div class="cartao">
+      <div class="topo-cartao">
+        <div class="esporte-info">
+          <div class="icone-esporte">⚽</div>
           <div>
-            <div class="sport-name">Futebol</div>
-            <span class="level-badge level-intermediario">Intermediário</span>
+            <div class="nome-esporte">Futebol</div>
+            <span class="etiqueta-nivel nivel-intermediario">Intermediário</span>
           </div>
         </div>
-        <span class="vagas-badge vagas-open">2 vagas</span>
+        <span class="etiqueta-vagas vagas-aberta">2 vagas</span>
       </div>
-      <div class="card-info">
-        <div class="info-row">
+      <div class="detalhes-cartao">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           Quadra do Leblon
         </div>
-        <div class="info-row">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           14 de mar. às 19:00
         </div>
-        <div class="info-row">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           8/10 jogadores confirmados
         </div>
       </div>
-      <div class="progress-wrap">
-        <div class="progress-meta"><span>Confirmados</span><span>8 de 10</span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+      <div class="area-progresso">
+        <div class="texto-progresso"><span>Confirmados</span><span>8 de 10</span></div>
+        <div class="barra-fundo"><div class="barra-preenchida" style="width:80%"></div></div>
       </div>
     </div>
 
-    <!-- Card 2: Vôlei (Fechada) -->
-    <div class="card">
-      <div class="card-top">
-        <div class="card-sport">
-          <div class="sport-icon">🏐</div>
+    <!-- volei avancado fechado -->
+    <div class="cartao">
+      <div class="topo-cartao">
+        <div class="esporte-info">
+          <div class="icone-esporte">🏐</div>
           <div>
-            <div class="sport-name">Vôlei</div>
-            <span class="level-badge level-avancado">Avançado</span>
+            <div class="nome-esporte">Vôlei</div>
+            <span class="etiqueta-nivel nivel-avancado">Avançado</span>
           </div>
         </div>
-        <span class="vagas-badge vagas-closed">Fechada</span>
+        <span class="etiqueta-vagas vagas-fechada">Fechada</span>
       </div>
-      <div class="card-info">
-        <div class="info-row">
+      <div class="detalhes-cartao">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           Arena Copacabana
         </div>
-        <div class="info-row">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           13 de mar. às 18:00
         </div>
-        <div class="info-row">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           6/6 jogadores confirmados
         </div>
       </div>
-      <div class="progress-wrap">
-        <div class="progress-meta"><span>Confirmados</span><span>6 de 6</span></div>
-        <div class="progress-bar"><div class="progress-fill full" style="width:100%"></div></div>
+      <div class="area-progresso">
+        <div class="texto-progresso"><span>Confirmados</span><span>6 de 6</span></div>
+        <div class="barra-fundo"><div class="barra-preenchida cheia" style="width:100%"></div></div>
       </div>
     </div>
 
-    <!-- Card 3: Basquete -->
-    <div class="card">
-      <div class="card-top">
-        <div class="card-sport">
-          <div class="sport-icon">🏀</div>
+    <!-- basquete iniciante -->
+    <div class="cartao">
+      <div class="topo-cartao">
+        <div class="esporte-info">
+          <div class="icone-esporte">🏀</div>
           <div>
-            <div class="sport-name">Basquete</div>
-            <span class="level-badge level-iniciante">Iniciante</span>
+            <div class="nome-esporte">Basquete</div>
+            <span class="etiqueta-nivel nivel-iniciante">Iniciante</span>
           </div>
         </div>
-        <span class="vagas-badge vagas-open">6 vagas</span>
+        <span class="etiqueta-vagas vagas-aberta">6 vagas</span>
       </div>
-      <div class="card-info">
-        <div class="info-row">
+      <div class="detalhes-cartao">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           Quadra do Flamengo
         </div>
-        <div class="info-row">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           15 de mar. às 17:00
         </div>
-        <div class="info-row">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           4/10 jogadores confirmados
         </div>
       </div>
-      <div class="progress-wrap">
-        <div class="progress-meta"><span>Confirmados</span><span>4 de 10</span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+      <div class="area-progresso">
+        <div class="texto-progresso"><span>Confirmados</span><span>4 de 10</span></div>
+        <div class="barra-fundo"><div class="barra-preenchida" style="width:40%"></div></div>
       </div>
     </div>
 
-    <!-- Card 4: Futevôlei -->
-    <div class="card">
-      <div class="card-top">
-        <div class="card-sport">
-          <div class="sport-icon">🏖️</div>
+    <!-- futeevolei intermediario -->
+    <div class="cartao">
+      <div class="topo-cartao">
+        <div class="esporte-info">
+          <div class="icone-esporte">🏖️</div>
           <div>
-            <div class="sport-name">Futevôlei</div>
-            <span class="level-badge level-intermediario">Intermediário</span>
+            <div class="nome-esporte">Futevôlei</div>
+            <span class="etiqueta-nivel nivel-intermediario">Intermediário</span>
           </div>
         </div>
-        <span class="vagas-badge vagas-open">1 vaga</span>
+        <span class="etiqueta-vagas vagas-aberta">1 vaga</span>
       </div>
-      <div class="card-info">
-        <div class="info-row">
+      <div class="detalhes-cartao">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           Praia de Ipanema
         </div>
-        <div class="info-row">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           13 de mar. às 16:00
         </div>
-        <div class="info-row">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           3/4 jogadores confirmados
         </div>
       </div>
-      <div class="progress-wrap">
-        <div class="progress-meta"><span>Confirmados</span><span>3 de 4</span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+      <div class="area-progresso">
+        <div class="texto-progresso"><span>Confirmados</span><span>3 de 4</span></div>
+        <div class="barra-fundo"><div class="barra-preenchida" style="width:75%"></div></div>
       </div>
     </div>
 
-    <!-- Card 5: Futebol Avançado -->
-    <div class="card">
-      <div class="card-top">
-        <div class="card-sport">
-          <div class="sport-icon">⚽</div>
+    <!-- futebol avancado -->
+    <div class="cartao">
+      <div class="topo-cartao">
+        <div class="esporte-info">
+          <div class="icone-esporte">⚽</div>
           <div>
-            <div class="sport-name">Futebol</div>
-            <span class="level-badge level-avancado">Avançado</span>
+            <div class="nome-esporte">Futebol</div>
+            <span class="etiqueta-nivel nivel-avancado">Avançado</span>
           </div>
         </div>
-        <span class="vagas-badge vagas-open">2 vagas</span>
+        <span class="etiqueta-vagas vagas-aberta">2 vagas</span>
       </div>
-      <div class="card-info">
-        <div class="info-row">
+      <div class="detalhes-cartao">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           Arena Botafogo
         </div>
-        <div class="info-row">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           14 de mar. às 20:00
         </div>
-        <div class="info-row">
+        <div class="linha-detalhe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           10/12 jogadores confirmados
         </div>
       </div>
-      <div class="progress-wrap">
-        <div class="progress-meta"><span>Confirmados</span><span>10 de 12</span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:83%"></div></div>
+      <div class="area-progresso">
+        <div class="texto-progresso"><span>Confirmados</span><span>10 de 12</span></div>
+        <div class="barra-fundo"><div class="barra-preenchida" style="width:83%"></div></div>
       </div>
     </div>
 
-  </div><!-- /content -->
+  </div><!-- fim conteudo -->
 
-  <!-- BOTTOM NAV -->
-  <nav class="nav">
-    <div class="nav-item active">
+  <!-- menu de baixo -->
+  <nav class="menu-baixo">
+    <div class="item-menu ativo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span class="nav-label">Início</span>
+      <span class="rotulo-menu">Início</span>
     </div>
-    <div class="nav-item">
+    <div class="item-menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-      <span class="nav-label">Mapa</span>
+      <span class="rotulo-menu">Mapa</span>
     </div>
-    <div class="nav-center">
-      <div class="nav-create">
+    <div class="centro-menu">
+      <div class="botao-criar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       </div>
-      <span class="nav-label" style="color:var(--blue);font-weight:700;">Criar</span>
+      <span class="rotulo-menu" style="color:var(--blue);font-weight:700;">Criar</span>
     </div>
-    <div class="nav-item">
-      <div class="notif-wrap">
+    <div class="item-menu">
+      <div class="icone-notif">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        <span class="notif-dot"></span>
+        <span class="bolinha-notif"></span>
       </div>
-      <span class="nav-label">Avisos</span>
+      <span class="rotulo-menu">Avisos</span>
     </div>
-    <div class="nav-item">
+    <div class="item-menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <span class="nav-label">Perfil</span>
+      <span class="rotulo-menu">Perfil</span>
     </div>
   </nav>
 
 </div>
 
 <script>
-  // Filter interaction
-  document.querySelectorAll('.filter-btn').forEach(btn => {
+  // filtros
+  document.querySelectorAll('.botao-filtro').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      document.querySelectorAll('.botao-filtro').forEach(b => b.classList.remove('ativo'));
+      btn.classList.add('ativo');
     });
   });
 </script>
 </body>
 </html>
-
-

@@ -1,15 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -43,8 +31,8 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ─── SHELL ─── */
-  .shell {
+  /* tela principal */
+  .tela {
     max-width: 430px;
     margin: 0 auto;
     min-height: 100dvh;
@@ -54,8 +42,8 @@
     overflow: hidden;
   }
 
-  /* ─── HERO BLOB TOP ─── */
-  .hero-bg {
+  /* fundo azul do topo */
+  .fundo-topo {
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 280px;
@@ -64,7 +52,7 @@
     z-index: 0;
     overflow: hidden;
   }
-  .hero-bg::before {
+  .fundo-topo::before {
     content: '';
     position: absolute;
     width: 260px; height: 260px;
@@ -72,7 +60,7 @@
     border: 2px solid rgba(255,255,255,.08);
     top: -80px; right: -60px;
   }
-  .hero-bg::after {
+  .fundo-topo::after {
     content: '';
     position: absolute;
     width: 140px; height: 140px;
@@ -80,13 +68,13 @@
     border: 2px solid rgba(255,255,255,.06);
     bottom: 30px; left: -30px;
   }
-  .hero-shine {
+  .brilho-fundo {
     position: absolute;
     inset: 0;
     background: radial-gradient(ellipse at 70% -10%, rgba(255,255,255,.15) 0%, transparent 60%);
   }
 
-  /* ─── MAIN ─── */
+  /* area central */
   main {
     position: relative;
     z-index: 1;
@@ -97,15 +85,15 @@
     flex: 1;
   }
 
-  /* ─── LOGO AREA ─── */
-  .logo-area {
+  /* logo e nome do app */
+  .area-logo {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 64px;
     margin-bottom: 32px;
   }
-  .logo-icon {
+  .icone-logo {
     width: 68px; height: 68px;
     background: rgba(255,255,255,.18);
     border: 2px solid rgba(255,255,255,.3);
@@ -117,47 +105,47 @@
     box-shadow: 0 8px 32px rgba(0,0,0,.15);
     animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
   }
-  .logo-name {
+  .nome-app {
     font-size: 28px;
     font-weight: 800;
     color: #fff;
     letter-spacing: -1px;
-    animation: fadeUp .45s .1s ease both;
+    animation: subirFade .45s .1s ease both;
   }
-  .logo-name span { color: rgba(255,255,255,.7); }
-  .logo-tagline {
+  .nome-app span { color: rgba(255,255,255,.7); }
+  .slogan-app {
     font-size: 14.5px;
     color: rgba(255,255,255,.72);
     font-weight: 500;
     margin-top: 4px;
-    animation: fadeUp .45s .18s ease both;
+    animation: subirFade .45s .18s ease both;
   }
 
   @keyframes popIn {
     from { opacity: 0; transform: scale(.7); }
     to   { opacity: 1; transform: scale(1); }
   }
-  @keyframes fadeUp {
+  @keyframes subirFade {
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ─── CARD ─── */
-  .card {
+  /* caixa do formulario */
+  .caixa-login {
     width: 100%;
     background: var(--card);
     border-radius: 24px;
     padding: 28px 24px 24px;
     box-shadow: 0 8px 40px rgba(0,0,0,.10);
     border: 1.5px solid var(--border);
-    animation: fadeUp .5s .22s ease both;
+    animation: subirFade .5s .22s ease both;
   }
 
-  /* ─── FORM ─── */
-  .field {
+  /* campos do formulario */
+  .campo {
     margin-bottom: 16px;
   }
-  .field label {
+  .campo label {
     display: block;
     font-size: 12.5px;
     font-weight: 700;
@@ -166,10 +154,10 @@
     letter-spacing: .6px;
     margin-bottom: 7px;
   }
-  .input-wrap {
+  .caixa-input {
     position: relative;
   }
-  .input-wrap svg {
+  .caixa-input svg {
     position: absolute;
     left: 14px; top: 50%; transform: translateY(-50%);
     width: 17px; height: 17px;
@@ -177,7 +165,7 @@
     pointer-events: none;
     transition: color .2s;
   }
-  .input-wrap input {
+  .caixa-input input {
     width: 100%;
     padding: 13px 14px 13px 42px;
     border: 1.5px solid var(--border);
@@ -189,17 +177,17 @@
     outline: none;
     transition: border-color .2s, box-shadow .2s;
   }
-  .input-wrap input::placeholder { color: #A0AEC0; }
-  .input-wrap input:focus {
+  .caixa-input input::placeholder { color: #A0AEC0; }
+  .caixa-input input:focus {
     border-color: var(--blue);
     box-shadow: 0 0 0 3px var(--blue-glow);
     background: #fff;
   }
-  .input-wrap input:focus + svg,
-  .input-wrap:focus-within svg { color: var(--blue); }
+  .caixa-input input:focus + svg,
+  .caixa-input:focus-within svg { color: var(--blue); }
 
-  /* eye toggle */
-  .eye-btn {
+  /* botao olho de senha */
+  .btn-olho {
     position: absolute;
     right: 14px; top: 50%; transform: translateY(-50%);
     background: none; border: none; cursor: pointer;
@@ -208,25 +196,25 @@
     display: flex; align-items: center;
     transition: color .2s;
   }
-  .eye-btn:hover { color: var(--blue); }
-  .eye-btn svg { width: 17px; height: 17px; }
+  .btn-olho:hover { color: var(--blue); }
+  .btn-olho svg { width: 17px; height: 17px; }
 
-  .field-row {
+  .linha-esqueceu {
     display: flex;
     justify-content: flex-end;
     margin-top: 8px;
   }
-  .forgot {
+  .link-esqueceu {
     font-size: 13px;
     font-weight: 600;
     color: var(--blue);
     text-decoration: none;
     transition: opacity .2s;
   }
-  .forgot:hover { opacity: .75; }
+  .link-esqueceu:hover { opacity: .75; }
 
-  /* ─── BTN PRIMARY ─── */
-  .btn-primary {
+  /* botao entrar */
+  .btn-entrar {
     width: 100%;
     padding: 15px;
     border: none;
@@ -242,39 +230,39 @@
     transition: transform .18s, box-shadow .18s, opacity .18s;
     margin-top: 6px;
   }
-  .btn-primary:hover {
+  .btn-entrar:hover {
     transform: translateY(-1px);
     box-shadow: 0 10px 28px rgba(42,95,165,.45);
   }
-  .btn-primary:active { transform: scale(.98); opacity: .9; }
+  .btn-entrar:active { transform: scale(.98); opacity: .9; }
 
-  /* ─── DIVIDER ─── */
-  .divider {
+  /* divisor ou entre com */
+  .separador {
     display: flex;
     align-items: center;
     gap: 12px;
     margin: 22px 0 18px;
   }
-  .divider-line {
+  .linha-separador {
     flex: 1;
     height: 1.5px;
     background: var(--border);
     border-radius: 50px;
   }
-  .divider-text {
+  .texto-separador {
     font-size: 12.5px;
     font-weight: 600;
     color: var(--muted);
     white-space: nowrap;
   }
 
-  /* ─── SOCIAL GRID ─── */
-  .social-grid {
+  /* botoes de login social */
+  .grade-social {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
-  .btn-social {
+  .btn-rede {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -290,53 +278,53 @@
     cursor: pointer;
     transition: border-color .2s, box-shadow .2s, transform .15s;
   }
-  .btn-social:hover {
+  .btn-rede:hover {
     border-color: #CBD5E0;
     box-shadow: 0 3px 12px rgba(0,0,0,.08);
     transform: translateY(-1px);
   }
-  .btn-social:active { transform: scale(.97); }
-  .btn-social svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .btn-rede:active { transform: scale(.97); }
+  .btn-rede svg { width: 18px; height: 18px; flex-shrink: 0; }
 
-  /* ─── SIGNUP LINK ─── */
-  .signup-row {
+  /* link de cadastro */
+  .linha-cadastro {
     text-align: center;
     margin-top: 22px;
     font-size: 13.5px;
     color: var(--muted);
     font-weight: 500;
-    animation: fadeUp .5s .3s ease both;
+    animation: subirFade .5s .3s ease both;
   }
-  .signup-row a {
+  .linha-cadastro a {
     color: var(--blue);
     font-weight: 700;
     text-decoration: none;
     transition: opacity .2s;
   }
-  .signup-row a:hover { opacity: .75; }
+  .linha-cadastro a:hover { opacity: .75; }
 </style>
 </head>
 <body>
-<div class="shell">
+<div class="tela">
 
-  <!-- HERO BG -->
-  <div class="hero-bg"><div class="hero-shine"></div></div>
+  <!-- fundo azul -->
+  <div class="fundo-topo"><div class="brilho-fundo"></div></div>
 
   <main>
-    <!-- LOGO -->
-    <div class="logo-area">
-      <div class="logo-icon">⚽</div>
-      <div class="logo-name">Play<span>Match</span></div>
-      <div class="logo-tagline">Bora jogar? 🏃</div>
+    <!-- logo -->
+    <div class="area-logo">
+      <div class="icone-logo">⚽</div>
+      <div class="nome-app">Play<span>Match</span></div>
+      <div class="slogan-app">Bora jogar? 🏃</div>
     </div>
 
-    <!-- CARD -->
-    <div class="card">
+    <!-- formulario de login -->
+    <div class="caixa-login">
 
-      <!-- EMAIL -->
-      <div class="field">
+      <!-- email -->
+      <div class="campo">
         <label>E-mail</label>
-        <div class="input-wrap">
+        <div class="caixa-input">
           <input type="email" placeholder="seu@email.com" autocomplete="email">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -345,42 +333,42 @@
         </div>
       </div>
 
-      <!-- SENHA -->
-      <div class="field">
+      <!-- senha -->
+      <div class="campo">
         <label>Senha</label>
-        <div class="input-wrap">
+        <div class="caixa-input">
           <input type="password" id="pwd" placeholder="••••••••" autocomplete="current-password">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
           </svg>
-          <button class="eye-btn" onclick="togglePwd()" type="button" aria-label="Mostrar senha">
+          <button class="btn-olho" onclick="togglePwd()" type="button" aria-label="Mostrar senha">
             <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
               <circle cx="12" cy="12" r="3"/>
             </svg>
           </button>
         </div>
-        <div class="field-row">
-          <a href="#" class="forgot">Esqueceu a senha?</a>
+        <div class="linha-esqueceu">
+          <a href="#" class="link-esqueceu">Esqueceu a senha?</a>
         </div>
       </div>
 
-      <!-- BTN ENTRAR -->
-      <button class="btn-primary" type="button">Entrar</button>
+      <!-- botao entrar -->
+      <button class="btn-entrar" type="button">Entrar</button>
 
-      <!-- DIVIDER -->
-      <div class="divider">
-        <div class="divider-line"></div>
-        <span class="divider-text">ou entre com</span>
-        <div class="divider-line"></div>
+      <!-- divisor -->
+      <div class="separador">
+        <div class="linha-separador"></div>
+        <span class="texto-separador">ou entre com</span>
+        <div class="linha-separador"></div>
       </div>
 
-      <!-- SOCIAL BUTTONS -->
-      <div class="social-grid">
+      <!-- login social -->
+      <div class="grade-social">
 
-        <!-- Google -->
-        <button class="btn-social" type="button">
+        <!-- google -->
+        <button class="btn-rede" type="button">
           <svg viewBox="0 0 24 24">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -390,24 +378,24 @@
           Google
         </button>
 
-        <!-- Apple -->
-        <button class="btn-social" type="button">
+        <!-- apple -->
+        <button class="btn-rede" type="button">
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
           </svg>
           Apple
         </button>
 
-        <!-- Facebook -->
-        <button class="btn-social" type="button">
+        <!-- facebook -->
+        <button class="btn-rede" type="button">
           <svg viewBox="0 0 24 24" fill="#1877F2">
             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
           </svg>
           Facebook
         </button>
 
-        <!-- Microsoft -->
-        <button class="btn-social" type="button">
+        <!-- microsoft -->
+        <button class="btn-rede" type="button">
           <svg viewBox="0 0 24 24">
             <path fill="#F25022" d="M1 1h10.5v10.5H1z"/>
             <path fill="#7FBA00" d="M12.5 1H23v10.5H12.5z"/>
@@ -420,8 +408,8 @@
       </div>
     </div>
 
-    <!-- SIGNUP LINK -->
-    <p class="signup-row">Ainda não tem conta? <a href="#">Criar conta</a></p>
+    <!-- link pra criar conta -->
+    <p class="linha-cadastro">Ainda não tem conta? <a href="#">Criar conta</a></p>
 
   </main>
 </div>
@@ -446,4 +434,3 @@
 </script>
 </body>
 </html>
-
