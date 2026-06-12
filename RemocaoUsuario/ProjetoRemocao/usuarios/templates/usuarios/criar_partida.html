@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Partida</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #205e9e, #f45a16);
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #205e9e;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #f45a16;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #205e9e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Criar Partida</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Esporte</label>
+        <input type="text" name="esporte" placeholder="Ex: Futebol" required>
+
+        <label>Local</label>
+        <input type="text" name="local" placeholder="Ex: Campo do Aterro" required>
+
+        <label>Cidade</label>
+        <input type="text" name="cidade" placeholder="Ex: Rio de Janeiro" required>
+
+        <label>Data</label>
+        <input type="date" name="data" required>
+
+        <label>Horário</label>
+        <input type="time" name="horario" required>
+
+        <label>Número de jogadores</label>
+        <input type="number" name="num_jogadores" required>
+
+        <label>Status</label>
+        <select name="status">
+            <option value="Aberta">Aberta</option>
+            <option value="Lotada">Lotada</option>
+            <option value="Cancelada">Cancelada</option>
+        </select>
+
+        <button type="submit">Criar partida</button>
+    </form>
+
+    <a href="{% url 'listar_partidas' %}">Voltar para partidas</a>
+</div>
+
+</body>
+</html>

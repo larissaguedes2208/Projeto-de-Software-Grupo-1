@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Partidas</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #205e9e;
+            text-align: center;
+        }
+
+        form {
+            max-width: 700px;
+            margin: 0 auto 25px;
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 14px 20px;
+            background: #f45a16;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .card {
+            max-width: 700px;
+            margin: 15px auto;
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: #205e9e;
+            margin: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: #205e9e;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #205e9e;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Buscar Partidas</h1>
+
+<form method="GET">
+    <input type="text" name="q" placeholder="Buscar por esporte, local, cidade ou status" value="{{ termo }}">
+    <button type="submit">Buscar</button>
+</form>
+
+{% for partida in partidas %}
+    <div class="card">
+        <h2>{{ partida.esporte }}</h2>
+        <p><strong>Local:</strong> {{ partida.local }}</p>
+        <p><strong>Cidade:</strong> {{ partida.cidade }}</p>
+        <p><strong>Data:</strong> {{ partida.data }}</p>
+        <p><strong>Status:</strong> {{ partida.status }}</p>
+
+        <a href="{% url 'confirmar_participacao' %}" class="btn">Ver partida</a>
+    </div>
+{% empty %}
+    <p style="text-align:center;">Nenhuma partida encontrada.</p>
+{% endfor %}
+
+<a href="{% url 'listar_partidas' %}" class="voltar">Voltar para início</a>
+
+</body>
+</html>
