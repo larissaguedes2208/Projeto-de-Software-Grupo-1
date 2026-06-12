@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>PlayMatch — Detalhes da Partida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+  /* ─── RESET E VARIÁVEIS ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --azul:        #2A5FA5;
+    --azul-escuro: #1E4580;
+    --azul-claro:  #4A7EC7;
+    --laranja:     #F26419;
+    --verde:       #22C55E;
+    --vermelho:    #EF4444;
+    --fundo:       #F4F6FA;
+    --branco:      #FFFFFF;
+    --texto:       #1A202C;
+    --cinza:       #718096;
+    --borda:       #E2E8F0;
+    --fonte:       'Plus Jakarta Sans', sans-serif;
+    --altura-nav:  68px;
+  }
+
+  html, body {
+    font-family: var(--fonte);
+    background: var(--fundo);
+    color: var(--texto);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100%;
+  }
+
+  /* ─── TELA (mobile shell) ─── */
+  .tela {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    background: var(--fundo);
+    position: relative;
+    overflow-x: hidden;
+    padding-bottom: calc(var(--altura-nav) + 16px);
+  }
+
+  /* ─── CABEÇALHO ─── */
+  .cabecalho {
+    background: linear-gradient(145deg, var(--azul-escuro) 0%, var(--azul) 60%, var(--azul-claro) 100%);
+    padding: 52px 20px 60px; /* padding extra embaixo pra card flutuar */
+    position: relative;
+    overflow: hidden;
+  }
+  /* brilho decorativo */
+  .cabecalho::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% -20%, rgba(255,255,255,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* círculo decorativo */
+  .cabecalho::after {
+    content: '';
+    position: absolute;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.08);
+    top: -60px; right: -40px;
+    pointer-events: none;
+  }
+
+  .cabecalho-conteudo {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  /* botão voltar */
+  .btn-voltar {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.18);
+    border: 1.5px solid rgba(255,255,255,.28);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background .2s;
+    text-decoration: none;
+  }
+  .btn-voltar:hover { background: rgba(255,255,255,.28); }
+  .btn-voltar svg { width: 18px; height: 18px; color: #fff; }
+
+  /* título do cabeçalho */
+  .cabecalho-titulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cabecalho-titulo .icone-esporte {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .cabecalho-titulo h1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.3px;
+  }
+  .cabecalho-titulo p {
+    font-size: 13px;
+    color: rgba(255,255,255,.72);
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  /* ─── CONTEÚDO ─── */
+  .conteudo {
+    padding: 0 16px;
+    margin-top: -30px; /* sobe sobre o cabeçalho */
+  }
+
+  /* ─── CARTÃO PRINCIPAL DA PARTIDA ─── */
+  .cartao-partida {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.10);
+    border: 1.5px solid var(--borda);
+    margin-bottom: 16px;
+    animation: subirFade .4s ease both;
+  }
+
+  /* topo do cartão: esporte + badge de vagas */
+  .cartao-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1.5px solid var(--borda);
+  }
+  .esporte-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .icone-esporte-grande {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: var(--fundo);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .esporte-nome {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -.3px;
+  }
+
+  /* badge de nível */
+  .nivel {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .nivel-iniciante     { background: #DCFCE7; color: #16A34A; }
+  .nivel-intermediario { background: #FEF3C7; color: #D97706; }
+  .nivel-avancado      { background: #FEE2E2; color: #DC2626; }
+
+  /* badge de vagas */
+  .vagas {
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .vagas-abertas  { background: var(--azul);    color: #fff; }
+  .vagas-fechada  { background: var(--vermelho); color: #fff; }
+
+  /* linhas de info (local, data, hora, jogadores) */
+  .infos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .linha-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--cinza);
+    font-weight: 500;
+  }
+  .linha-info svg {
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+    color: var(--azul);
+  }
+  .linha-info strong {
+    color: var(--texto);
+    font-weight: 600;
+  }
+
+  /* barra de progresso de vagas */
+  .barra-vagas {
+    margin-top: 4px;
+  }
+  .barra-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--cinza);
+    margin-bottom: 7px;
+  }
+  .barra-fundo {
+    height: 7px;
+    border-radius: 50px;
+    background: var(--borda);
+    overflow: hidden;
+  }
+  .barra-preenchida {
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--azul), var(--azul-claro));
+    transition: width .7s ease;
+  }
+  .barra-preenchida.cheia {
+    background: linear-gradient(90deg, var(--vermelho), #F87171);
+  }
+
+  /* ─── TÍTULO DE SEÇÃO ─── */
+  .titulo-secao {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.3px;
+    margin-bottom: 12px;
+    margin-top: 4px;
+  }
+
+  /* ─── LISTA DE JOGADORES ─── */
+  .lista-jogadores {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    border: 1.5px solid var(--borda);
+    margin-bottom: 16px;
+    animation: subirFade .4s .07s ease both;
+  }
+
+  /* cada jogador */
+  .jogador {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--borda);
+    transition: background .15s;
+  }
+  .jogador:last-child { border-bottom: none; padding-bottom: 0; }
+  .jogador:first-child { padding-top: 0; }
+
+  /* foto circular */
+  .foto-jogador {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  }
+
+  .jogador-dados { flex: 1; }
+  .jogador-nome {
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: -.15px;
+  }
+  .jogador-nivel {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cinza);
+    margin-top: 1px;
+  }
+
+  /* badge organizador */
+  .badge-organizador {
+    font-size: 11px;
+    font-weight: 700;
+    background: #EBF2FF;
+    color: var(--azul);
+    padding: 2px 8px;
+    border-radius: 50px;
+  }
+
+  /* ─── INFORMAÇÕES ADICIONAIS ─── */
+  .infos-extras {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    border: 1.5px solid var(--borda);
+    margin-bottom: 20px;
+    animation: subirFade .4s .12s ease both;
+  }
+
+  .linha-extra {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--borda);
+  }
+  .linha-extra:last-child { border-bottom: none; padding-bottom: 0; }
+  .linha-extra:first-child { padding-top: 0; }
+
+  .icone-extra {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: #EBF2FF;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .icone-extra svg { width: 17px; height: 17px; color: var(--azul); }
+
+  .extra-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--cinza);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .extra-valor {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texto);
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  /* ─── BOTÃO PARTICIPAR ─── */
+  .botao-participar {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul) 60%, var(--azul-claro) 100%);
+    color: #fff;
+    font-family: var(--fonte);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.1px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(42,95,165,.38);
+    transition: transform .18s, box-shadow .18s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    animation: subirFade .4s .18s ease both;
+    margin-bottom: 10px;
+  }
+  .botao-participar svg { width: 20px; height: 20px; }
+  .botao-participar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(42,95,165,.45);
+  }
+  .botao-participar:active { transform: scale(.98); }
+
+  /* botão ver no mapa */
+  .botao-mapa {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid var(--azul);
+    border-radius: 16px;
+    background: transparent;
+    color: var(--azul);
+    font-family: var(--fonte);
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background .2s, color .2s;
+    animation: subirFade .4s .22s ease both;
+  }
+  .botao-mapa:hover { background: #EBF2FF; }
+  .botao-mapa svg { width: 18px; height: 18px; }
+
+  /* ─── NAVEGAÇÃO INFERIOR ─── */
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    height: var(--altura-nav);
+    background: #fff;
+    border-top: 1.5px solid var(--borda);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 8px;
+    z-index: 100;
+  }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 14px;
+    transition: background .15s;
+    flex: 1;
+    text-decoration: none;
+  }
+  .nav-item:hover { background: var(--fundo); }
+  .nav-item svg { width: 22px; height: 22px; color: var(--cinza); }
+  .nav-rotulo { font-size: 10.5px; font-weight: 600; color: var(--cinza); }
+  .nav-criar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--azul), var(--azul-claro));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(42,95,165,.4);
+    cursor: pointer;
+    transition: transform .2s;
+    flex-shrink: 0;
+  }
+  .nav-criar:hover { transform: scale(1.08); }
+  .nav-criar svg { width: 22px; height: 22px; color: #fff; }
+  .nav-centro { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .nav-centro .nav-rotulo { color: var(--azul); font-weight: 700; }
+  .ponto-aviso {
+    position: absolute;
+    top: -2px; right: -2px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--laranja);
+    border: 1.5px solid #fff;
+  }
+  .icone-relativo { position: relative; display: inline-flex; }
+
+  /* ─── ANIMAÇÃO ─── */
+  @keyframes subirFade {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="tela">
+
+  <header class="cabecalho">
+    <div class="cabecalho-conteudo">
+
+      <!-- botão voltar -->
+      <a href="playmatch.html" class="btn-voltar" onclick="voltarPagina(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </a>
+
+      <!-- título com ícone -->
+      <div class="cabecalho-titulo">
+        <span class="icone-esporte">⚽</span>
+        <div>
+          <h1>Futebol</h1>
+          <p>Detalhes da partida</p>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+   <div class="conteudo">
+
+    <!-- ── CARTÃO PRINCIPAL ── -->
+    <div class="cartao-partida">
+
+      <!-- topo: esporte + vagas -->
+      <div class="cartao-topo">
+        <div class="esporte-info">
+          <div class="icone-esporte-grande">⚽</div>
+          <div>
+            <div class="esporte-nome">Futebol</div>
+            <span class="nivel nivel-intermediario">Intermediário</span>
+          </div>
+        </div>
+        <span class="vagas vagas-abertas">2 vagas</span>
+      </div>
+
+      <!-- infos da partida -->
+      <div class="infos">
+
+        <div class="linha-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span><strong>Quadra do Leblon</strong> — Av. Ataulfo de Paiva, 1234</span>
+        </div>
+
+        <div class="linha-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <span>Sábado, <strong>14 de março de 2025</strong></span>
+        </div>
+
+        <div class="linha-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Começa às <strong>19:00</strong></span>
+        </div>
+
+        <div class="linha-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span><strong>8 de 10</strong> jogadores confirmados</span>
+        </div>
+
+      </div>
+
+      <!-- barra de progresso -->
+      <div class="barra-vagas">
+        <div class="barra-meta">
+          <span>Vagas preenchidas</span>
+          <span>Faltam 2 jogadores</span>
+        </div>
+        <div class="barra-fundo">
+          <div class="barra-preenchida" style="width: 80%"></div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /cartao-partida -->
+
+    <!-- ── LISTA DE JOGADORES ── -->
+    <div class="lista-jogadores">
+
+      <div class="titulo-secao">Jogadores Confirmados</div>
+
+      <!-- Jogador 1 — organizador -->
+      <div class="jogador">
+        <div class="foto-jogador" style="background: linear-gradient(135deg,#2A5FA5,#4A7EC7)">J</div>
+        <div class="jogador-dados">
+          <div class="jogador-nome">João Silva</div>
+          <div class="jogador-nivel">Avançado</div>
+        </div>
+        <span class="badge-organizador">Organizador</span>
+      </div>
+
+      <!-- Jogador 2 -->
+      <div class="jogador">
+        <div class="foto-jogador" style="background: linear-gradient(135deg,#7C3AED,#A78BFA)">M</div>
+        <div class="jogador-dados">
+          <div class="jogador-nome">Maria Clara Barros</div>
+          <div class="jogador-nivel">Avançado</div>
+        </div>
+      </div>
+
+      <!-- Jogador 3 -->
+      <div class="jogador">
+        <div class="foto-jogador" style="background: linear-gradient(135deg,#059669,#34D399)">P</div>
+        <div class="jogador-dados">
+          <div class="jogador-nome">Pedro Gaya</div>
+          <div class="jogador-nivel">Intermediário</div>
+        </div>
+      </div>
+
+      <!-- Jogador 4 -->
+      <div class="jogador">
+        <div class="foto-jogador" style="background: linear-gradient(135deg,#DC2626,#F87171)">F</div>
+        <div class="jogador-dados">
+          <div class="jogador-nome">Felipe Saul</div>
+          <div class="jogador-nivel">Iniciante</div>
+        </div>
+      </div>
+
+      <!-- Jogador 5 -->
+      <div class="jogador">
+        <div class="foto-jogador" style="background: linear-gradient(135deg,#D97706,#FCD34D)">A</div>
+        <div class="jogador-dados">
+          <div class="jogador-nome">Ana Lima</div>
+          <div class="jogador-nivel">Intermediário</div>
+        </div>
+      </div>
+
+      <!-- Jogador 6 -->
+      <div class="jogador">
+        <div class="foto-jogador" style="background: linear-gradient(135deg,#0891B2,#67E8F9)">L</div>
+        <div class="jogador-dados">
+          <div class="jogador-nome">Lucas Oliveira</div>
+          <div class="jogador-nivel">Avançado</div>
+        </div>
+      </div>
+
+      <!-- Jogador 7 -->
+      <div class="jogador">
+        <div class="foto-jogador" style="background: linear-gradient(135deg,#BE185D,#F9A8D4)">J</div>
+        <div class="jogador-dados">
+          <div class="jogador-nome">Juliana Souza</div>
+          <div class="jogador-nivel">Intermediário</div>
+        </div>
+      </div>
+
+      <!-- Jogador 8 -->
+      <div class="jogador">
+        <div class="foto-jogador" style="background: linear-gradient(135deg,#1D4ED8,#93C5FD)">R</div>
+        <div class="jogador-dados">
+          <div class="jogador-nome">Rafael Alves</div>
+          <div class="jogador-nivel">Iniciante</div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /lista-jogadores -->
+
+    <!-- ── INFORMAÇÕES ADICIONAIS ── -->
+    <div class="infos-extras">
+
+      <div class="titulo-secao">Informações Adicionais</div>
+
+      <!-- Tipo de quadra -->
+      <div class="linha-extra">
+        <div class="icone-extra">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <line x1="12" y1="3" x2="12" y2="21"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+          </svg>
+        </div>
+        <div>
+          <div class="extra-label">Tipo de Quadra</div>
+          <div class="extra-valor">Quadra Society — Grama sintética</div>
+        </div>
+      </div>
+
+      <!-- Duração -->
+      <div class="linha-extra">
+        <div class="icone-extra">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div>
+          <div class="extra-label">Duração Estimada</div>
+          <div class="extra-valor">90 minutos (2 tempos de 45 min)</div>
+        </div>
+      </div>
+
+      <!-- Organizador -->
+      <div class="linha-extra">
+        <div class="icone-extra">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="extra-label">Organizador</div>
+          <div class="extra-valor">João Silva — (21) 99999-1234</div>
+        </div>
+      </div>
+
+      <!-- Observações -->
+      <div class="linha-extra">
+        <div class="icone-extra">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <div>
+          <div class="extra-label">Observações</div>
+          <div class="extra-valor">Trazer colete e água. Chuteira obrigatória. Rola cobrança de R$15 por jogador no dia.</div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /infos-extras -->
+
+    <!-- ── BOTÕES DE AÇÃO ── -->
+    <button class="botao-participar" onclick="entrarNaPelada()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="8.5" cy="7" r="4"/>
+        <line x1="20" y1="8" x2="20" y2="14"/>
+        <line x1="23" y1="11" x2="17" y2="11"/>
+      </svg>
+      Participar da Partida
+    </button>
+
+    <button class="botao-mapa">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+      </svg>
+      Ver no Mapa 🗺️
+    </button>
+
+  </div>
+  <!-- /conteudo -->
+
+  <nav class="nav">
+
+    <a href="playmatch.html" class="nav-item" onclick="voltarPagina(event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span class="nav-rotulo">Início</span>
+    </a>
+
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+      </svg>
+      <span class="nav-rotulo">Mapa</span>
+    </div>
+
+    <div class="nav-centro">
+      <div class="nav-criar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </div>
+      <span class="nav-rotulo" style="color:var(--azul);font-weight:700;">Criar</span>
+    </div>
+
+    <div class="nav-item">
+      <div class="icone-relativo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="ponto-aviso"></span>
+      </div>
+      <span class="nav-rotulo">Avisos</span>
+    </div>
+
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span class="nav-rotulo">Perfil</span>
+    </div>
+
+  </nav>
+
+</div><!-- /tela -->
+
+<script>
+
+  // Volta para a página inicial
+  function voltarPagina(evento) {
+    evento.preventDefault();
+    window.location.href = 'playmatch.html';
+  }
+
+  // Simula entrar na pelada
+  function entrarNaPelada() {
+    const botao = document.querySelector('.botao-participar');
+
+    // Feedback visual no botão
+    botao.style.background = 'linear-gradient(135deg, #059669, #34D399)';
+    botao.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+      Você entrou na pelada! 🎉
+    `;
+    botao.style.boxShadow = '0 6px 20px rgba(5,150,105,.4)';
+    botao.disabled = true;
+    botao.style.cursor = 'default';
+  }
+
+</script>
+
+</body>
+</html>
+
+
+
+
