@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Partida</title>
+    <title>Criar Partida</title>
 
     <style>
         body {
@@ -45,7 +45,7 @@
             width: 100%;
             margin-top: 25px;
             padding: 14px;
-            background: #205e9e;
+            background: #f45a16;
             color: white;
             border: none;
             border-radius: 12px;
@@ -66,37 +66,37 @@
 <body>
 
 <div class="container">
-    <h1>Editar Partida</h1>
+    <h1>Criar Partida</h1>
 
     <form method="POST">
         {% csrf_token %}
 
         <label>Esporte</label>
-        <input type="text" name="esporte" value="{{ partida.esporte }}" required>
+        <input type="text" name="esporte" placeholder="Ex: Futebol" required>
 
         <label>Local</label>
-        <input type="text" name="local" value="{{ partida.local }}" required>
+        <input type="text" name="local" placeholder="Ex: Campo do Aterro" required>
 
         <label>Cidade</label>
-        <input type="text" name="cidade" value="{{ partida.cidade }}" required>
+        <input type="text" name="cidade" placeholder="Ex: Rio de Janeiro" required>
 
         <label>Data</label>
-        <input type="date" name="data" value="{{ partida.data|date:'Y-m-d' }}" required>
+        <input type="date" name="data" required>
 
         <label>Horário</label>
-        <input type="time" name="horario" value="{{ partida.horario|time:'H:i' }}" required>
+        <input type="time" name="horario" required>
 
         <label>Número de jogadores</label>
-        <input type="number" name="num_jogadores" value="{{ partida.num_jogadores }}" required>
+        <input type="number" name="num_jogadores" required>
 
         <label>Status</label>
         <select name="status">
-            <option value="Aberta" {% if partida.status == 'Aberta' %}selected{% endif %}>Aberta</option>
-            <option value="Lotada" {% if partida.status == 'Lotada' %}selected{% endif %}>Lotada</option>
-            <option value="Cancelada" {% if partida.status == 'Cancelada' %}selected{% endif %}>Cancelada</option>
+            <option value="Aberta">Aberta</option>
+            <option value="Lotada">Lotada</option>
+            <option value="Cancelada">Cancelada</option>
         </select>
 
-        <button type="submit">Salvar alterações</button>
+        <button type="submit">Criar partida</button>
     </form>
 
     <a href="{% url 'listar_partidas' %}">Voltar para partidas</a>
