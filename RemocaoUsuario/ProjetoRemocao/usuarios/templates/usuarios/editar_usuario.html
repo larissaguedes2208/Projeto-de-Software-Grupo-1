@@ -1,106 +1,140 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Partida</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #205e9e, #f45a16);
-            min-height: 100vh;
-            padding: 40px;
-        }
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-        .container {
-            max-width: 500px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 18px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
+    <title>PlayMatch - Editar perfil</title>
 
-        h1 {
-            color: #205e9e;
-            text-align: center;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin-top: 6px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            width: 100%;
-            margin-top: 25px;
-            padding: 14px;
-            background: #205e9e;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 18px;
-            color: #205e9e;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
+    <link
+        rel="stylesheet"
+        href="{% static 'usuarios/style.css' %}"
+    >
 </head>
+
 <body>
 
-<div class="container">
-    <h1>Editar Partida</h1>
+<header class="header">
+    <h1>Editar perfil</h1>
 
-    <form method="POST">
-        {% csrf_token %}
+    <p>
+        Atualize seus dados pessoais.
+    </p>
+</header>
 
-        <label>Esporte</label>
-        <input type="text" name="esporte" value="{{ partida.esporte }}" required>
+<main class="container">
 
-        <label>Local</label>
-        <input type="text" name="local" value="{{ partida.local }}" required>
+    <section class="profile">
 
-        <label>Cidade</label>
-        <input type="text" name="cidade" value="{{ partida.cidade }}" required>
+        <div class="user-avatar">
+            JS
+        </div>
 
-        <label>Data</label>
-        <input type="date" name="data" value="{{ partida.data|date:'Y-m-d' }}" required>
+        <h2>João Silva</h2>
 
-        <label>Horário</label>
-        <input type="time" name="horario" value="{{ partida.horario|time:'H:i' }}" required>
+        <p>
+            Jogador PlayMatch
+        </p>
 
-        <label>Número de jogadores</label>
-        <input type="number" name="num_jogadores" value="{{ partida.num_jogadores }}" required>
+    </section>
 
-        <label>Status</label>
-        <select name="status">
-            <option value="Aberta" {% if partida.status == 'Aberta' %}selected{% endif %}>Aberta</option>
-            <option value="Lotada" {% if partida.status == 'Lotada' %}selected{% endif %}>Lotada</option>
-            <option value="Cancelada" {% if partida.status == 'Cancelada' %}selected{% endif %}>Cancelada</option>
-        </select>
+    <section class="card">
 
-        <button type="submit">Salvar alterações</button>
-    </form>
+        <h2>Seus dados</h2>
 
-    <a href="{% url 'listar_partidas' %}">Voltar para partidas</a>
-</div>
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="nome">
+                Nome
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                value="João Silva"
+                required
+            >
+
+            <label for="email">
+                E-mail
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="joao@email.com"
+                required
+            >
+
+            <label for="senha">
+                Nova senha
+            </label>
+
+            <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Preencha apenas se quiser alterar"
+            >
+
+            <button type="submit">
+                Salvar alterações
+            </button>
+        </form>
+
+        <a
+            href="{% url 'remover_usuario' %}"
+            class="btn red"
+        >
+            Remover minha conta
+        </a>
+
+        <a
+            href="{% url 'listar_partidas' %}"
+            class="btn btn-secundario"
+        >
+            Voltar para o início
+        </a>
+
+    </section>
+
+</main>
+
+<nav class="bottom-nav">
+
+    <a href="{% url 'listar_partidas' %}">
+        🏠
+        <span>Início</span>
+    </a>
+
+    <a href="{% url 'buscar_partidas' %}">
+        🔎
+        <span>Buscar</span>
+    </a>
+
+    <a href="{% url 'criar_partida' %}">
+        ➕
+        <span>Criar</span>
+    </a>
+
+    <a
+        href="{% url 'editar_usuario' %}"
+        class="active"
+    >
+        👤
+        <span>Perfil</span>
+    </a>
+
+</nav>
 
 </body>
 </html>
