@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlayMatch — Avaliações</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+  /* ─── reset e variaveis ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --azul:        #2A5FA5;
+    --azul-escuro: #1E4580;
+    --azul-claro:  #4A7EC7;
+    --laranja:     #F26419;
+    --vermelho:    #EF4444;
+    --amarelo:     #F59E0B;
+    --verde:       #22C55E;
+    --fundo:       #F4F6FA;
+    --branco:      #FFFFFF;
+    --texto:       #1A202C;
+    --cinza:       #718096;
+    --borda:       #E2E8F0;
+    --fonte:       'Plus Jakarta Sans', sans-serif;
+    --altura-nav:  68px;
+  }
+
+  html, body {
+    font-family: var(--fonte);
+    background: var(--fundo);
+    color: var(--texto);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100%;
+  }
+
+  /* tela mobile */
+  .tela {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--fundo);
+    position: relative;
+    overflow-x: hidden;
+    padding-bottom: calc(var(--altura-nav) + 16px);
+  }
+
+  /* ─── cabecalho azul ─── */
+  .cabecalho {
+    background: linear-gradient(145deg, var(--azul-escuro) 0%, var(--azul) 60%, var(--azul-claro) 100%);
+    padding: 52px 20px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cabecalho::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% -20%, rgba(255,255,255,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cabecalho::after {
+    content: '';
+    position: absolute;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.08);
+    top: -60px; right: -40px;
+    pointer-events: none;
+  }
+  .cabecalho-interno {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  /* botao de voltar */
+  .botao-voltar {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.18);
+    border: 1.5px solid rgba(255,255,255,.28);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .botao-voltar:hover { background: rgba(255,255,255,.28); }
+  .botao-voltar svg { width: 18px; height: 18px; color: #fff; }
+
+  .cabecalho-titulo h1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.3px;
+  }
+  .cabecalho-titulo p {
+    font-size: 13px;
+    color: rgba(255,255,255,.72);
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  /* ─── conteudo sobe sobre o cabecalho ─── */
+  .conteudo {
+    padding: 0 16px;
+    margin-top: -30px;
+  }
+
+  /* ─── estilos dos cartoes ─── */
+  .cartao {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    border: 1.5px solid var(--borda);
+    margin-bottom: 14px;
+  }
+
+  .titulo-secao {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.3px;
+    margin-bottom: 16px;
+  }
+
+  /* ─── card do organizador ─── */
+  .organizador-linha {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1.5px solid var(--borda);
+  }
+
+  .foto-organizador {
+    width: 62px; height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--azul), var(--azul-claro));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+    border: 3px solid var(--branco);
+    box-shadow: 0 4px 14px rgba(42,95,165,.3);
+  }
+
+  .organizador-nome {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.3px;
+  }
+  .organizador-cargo {
+    font-size: 12.5px;
+    color: var(--cinza);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .emblema-organizador {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #EBF2FF;
+    color: var(--azul);
+    padding: 2px 8px;
+    border-radius: 50px;
+  }
+
+  /* resumo de estrelas */
+  .resumo-estrelas {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nota-grande {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--texto);
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+
+  .resumo-direita { flex: 1; }
+
+  .estrelas-linha {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 4px;
+  }
+  .estrela-svg {
+    width: 20px; height: 20px;
+  }
+
+  .total-avaliacoes {
+    font-size: 12.5px;
+    color: var(--cinza);
+    font-weight: 500;
+  }
+
+  /* barrinhas de distribuicao */
+  .distribuicao { margin-top: 12px; }
+  .barra-dist-linha {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+  .barra-dist-numero {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cinza);
+    width: 10px;
+    text-align: right;
+  }
+  .barra-dist-fundo {
+    flex: 1;
+    height: 6px;
+    border-radius: 50px;
+    background: var(--borda);
+    overflow: hidden;
+  }
+  .barra-dist-preenchida {
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--amarelo), #FBBF24);
+  }
+  .barra-dist-qtd {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--cinza);
+    width: 18px;
+    text-align: right;
+  }
+
+  /* ─── sistema de estrelas clicaveis ─── */
+  .estrelas-selecionaveis {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .estrela-clicavel {
+    font-size: 36px;
+    cursor: pointer;
+    transition: transform .15s;
+    line-height: 1;
+    user-select: none;
+    filter: grayscale(1) opacity(.35);
+  }
+  .estrela-clicavel.acesa {
+    filter: none;
+    transform: scale(1.15);
+  }
+  .estrela-clicavel:hover {
+    transform: scale(1.2);
+  }
+
+  .texto-nota-selecionada {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cinza);
+    margin-bottom: 14px;
+    min-height: 18px;
+  }
+
+  /* campo de comentario */
+  .campo-comentario {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1.5px solid var(--borda);
+    border-radius: 14px;
+    background: var(--fundo);
+    font-family: var(--fonte);
+    font-size: 14px;
+    color: var(--texto);
+    outline: none;
+    resize: none;
+    transition: border-color .2s, box-shadow .2s;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .campo-comentario::placeholder { color: #A0AEC0; }
+  .campo-comentario:focus {
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(42,95,165,.12);
+    background: var(--branco);
+  }
+
+  /* botao enviar */
+  .botao-enviar {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul) 60%, var(--azul-claro) 100%);
+    color: #fff;
+    font-family: var(--fonte);
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(42,95,165,.35);
+    transition: transform .18s, box-shadow .18s, opacity .18s;
+  }
+  .botao-enviar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(42,95,165,.42);
+  }
+  .botao-enviar:active { transform: scale(.98); }
+  .botao-enviar:disabled {
+    opacity: .6;
+    cursor: default;
+    transform: none;
+  }
+
+  /* mensagem de sucesso */
+  .mensagem-sucesso {
+    display: none;
+    background: #DCFCE7;
+    border: 1.5px solid #86EFAC;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-top: 12px;
+    text-align: center;
+  }
+  .mensagem-sucesso .emoji-sucesso { font-size: 24px; margin-bottom: 4px; }
+  .mensagem-sucesso .texto-sucesso {
+    font-size: 14px;
+    font-weight: 700;
+    color: #16A34A;
+  }
+
+  /* ─── lista de avaliacoes ─── */
+  .cartao-avaliacao {
+    background: var(--fundo);
+    border-radius: 16px;
+    padding: 14px;
+    border: 1.5px solid var(--borda);
+    margin-bottom: 10px;
+    transition: box-shadow .2s;
+  }
+  .cartao-avaliacao:last-child { margin-bottom: 0; }
+  .cartao-avaliacao:hover { box-shadow: 0 4px 14px rgba(0,0,0,.07); }
+
+  /* animacao para avaliacao nova */
+  .cartao-avaliacao.nova-avaliacao {
+    animation: entrarAvaliacao .4s ease both;
+    background: #EBF2FF;
+    border-color: var(--azul-claro);
+  }
+  @keyframes entrarAvaliacao {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .avaliacao-topo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .foto-usuario {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .avaliacao-info { flex: 1; }
+  .avaliacao-nome { font-size: 14px; font-weight: 700; }
+  .avaliacao-data { font-size: 11.5px; color: var(--cinza); font-weight: 500; margin-top: 1px; }
+
+  .estrelas-avaliacao {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 6px;
+  }
+  .estrela-avaliacao { font-size: 14px; }
+
+  .avaliacao-comentario {
+    font-size: 13.5px;
+    color: var(--cinza);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  /* ─── navegacao inferior ─── */
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    height: var(--altura-nav);
+    background: #fff;
+    border-top: 1.5px solid var(--borda);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 8px;
+    z-index: 100;
+  }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 14px;
+    transition: background .15s;
+    flex: 1;
+    text-decoration: none;
+  }
+  .nav-item:hover { background: var(--fundo); }
+  .nav-item svg { width: 22px; height: 22px; color: var(--cinza); }
+  .nav-rotulo { font-size: 10.5px; font-weight: 600; color: var(--cinza); }
+
+  .nav-criar-btn {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--azul), var(--azul-claro));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(42,95,165,.4);
+    cursor: pointer;
+    transition: transform .2s;
+    flex-shrink: 0;
+  }
+  .nav-criar-btn:hover { transform: scale(1.08); }
+  .nav-criar-btn svg { width: 22px; height: 22px; color: #fff; }
+  .nav-centro { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .nav-centro .nav-rotulo { color: var(--azul); font-weight: 700; }
+
+  .ponto-aviso-wrap { position: relative; }
+  .ponto-aviso {
+    position: absolute;
+    top: -2px; right: -2px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--laranja);
+    border: 1.5px solid #fff;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="tela">
+
+  <!-- cabecalho -->
+  <header class="cabecalho">
+    <div class="cabecalho-interno">
+
+      <a href="detalhes-partida.html" class="botao-voltar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </a>
+
+      <div class="cabecalho-titulo">
+        <h1>Avaliações ⭐</h1>
+        <p>Futebol — Quadra do Leblon</p>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- conteudo -->
+  <div class="conteudo">
+
+    <!-- card do organizador -->
+    <div class="cartao">
+
+      <div class="organizador-linha">
+        <div class="foto-organizador">J</div>
+        <div>
+          <div class="organizador-nome">João Silva</div>
+          <div class="organizador-cargo">Organizador da pelada</div>
+          <span class="emblema-organizador">⚽ 47 partidas organizadas</span>
+        </div>
+      </div>
+
+      <!-- nota geral e distribuicao -->
+      <div class="resumo-estrelas">
+        <div class="nota-grande" id="nota-geral">4.5</div>
+        <div class="resumo-direita">
+          <div class="estrelas-linha" id="estrelas-media"></div>
+          <div class="total-avaliacoes" id="total-avaliacoes">6 avaliações</div>
+        </div>
+      </div>
+
+      <!-- barras de distribuicao -->
+      <div class="distribuicao" id="distribuicao"></div>
+
+    </div>
+
+    <!-- formulario de avaliacao -->
+    <div class="cartao">
+
+      <div class="titulo-secao">Deixar uma avaliação</div>
+
+      <!-- estrelas clicaveis -->
+      <div class="estrelas-selecionaveis" id="estrelas-selecionaveis">
+        <span class="estrela-clicavel" data-valor="1">⭐</span>
+        <span class="estrela-clicavel" data-valor="2">⭐</span>
+        <span class="estrela-clicavel" data-valor="3">⭐</span>
+        <span class="estrela-clicavel" data-valor="4">⭐</span>
+        <span class="estrela-clicavel" data-valor="5">⭐</span>
+      </div>
+
+      <!-- texto que aparece conforme seleciona -->
+      <div class="texto-nota-selecionada" id="texto-nota">Toque nas estrelas para avaliar</div>
+
+      <!-- campo de comentario -->
+      <textarea
+        class="campo-comentario"
+        id="campo-comentario"
+        rows="3"
+        placeholder="Escreva um comentário sobre a partida ou o organizador..."
+      ></textarea>
+
+      <!-- botao de enviar -->
+      <button class="botao-enviar" id="botao-enviar">Enviar Avaliação</button>
+
+      <!-- mensagem de sucesso -->
+      <div class="mensagem-sucesso" id="mensagem-sucesso">
+        <div class="emoji-sucesso">🎉</div>
+        <div class="texto-sucesso">Avaliação enviada com sucesso!</div>
+      </div>
+
+    </div>
+
+    <!-- lista de avaliacoes -->
+    <div class="cartao">
+
+      <div class="titulo-secao" id="titulo-lista">Avaliações anteriores</div>
+      <div id="lista-de-avaliacoes"></div>
+
+    </div>
+
+  </div>
+
+  <!-- navegacao inferior -->
+  <nav class="nav">
+
+    <a href="playmatch.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="nav-rotulo">Início</span>
+    </a>
+
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      <span class="nav-rotulo">Mapa</span>
+    </div>
+
+    <div class="nav-centro">
+      <div class="nav-criar-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+      <span class="nav-rotulo" style="color:var(--azul);font-weight:700;">Criar</span>
+    </div>
+
+    <div class="nav-item">
+      <div class="ponto-aviso-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="ponto-aviso"></span>
+      </div>
+      <span class="nav-rotulo">Avisos</span>
+    </div>
+
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="nav-rotulo">Perfil</span>
+    </div>
+
+  </nav>
+
+</div>
+
+<script>
+
+  // ─── dados das avaliacoes ficticias ───
+  var listaDeAvaliacoes = [
+    {
+      nome: "Maria Clara Barros",
+      inicial: "M",
+      cor: "linear-gradient(135deg,#7C3AED,#A78BFA)",
+      nota: 5,
+      comentario: "Partida incrível! João organiza muito bem, sempre pontual e comunicativo. Definitivamente vou jogar de novo.",
+      data: "12 de mar. de 2025"
+    },
+    {
+      nome: "Pedro Gaya",
+      inicial: "P",
+      cor: "linear-gradient(135deg,#059669,#34D399)",
+      nota: 4,
+      comentario: "Boa organização, mas o campo estava um pouco cheio demais. No geral foi uma pelada muito divertida.",
+      data: "10 de mar. de 2025"
+    },
+    {
+      nome: "Ana Lima",
+      inicial: "A",
+      cor: "linear-gradient(135deg,#D97706,#FCD34D)",
+      nota: 5,
+      comentario: "Melhor pelada que participei esse mês! Nível intermediário muito bem equilibrado.",
+      data: "8 de mar. de 2025"
+    },
+    {
+      nome: "Felipe Saul",
+      inicial: "F",
+      cor: "linear-gradient(135deg,#DC2626,#F87171)",
+      nota: 3,
+      comentario: "Partida ok, mas o horário atrasou quase 20 minutos. Poderia ter avisado no grupo antes.",
+      data: "5 de mar. de 2025"
+    },
+    {
+      nome: "Lucas Oliveira",
+      inicial: "L",
+      cor: "linear-gradient(135deg,#0891B2,#67E8F9)",
+      nota: 5,
+      comentario: "João é o melhor organizador que já tive! Tudo nos conformes, pagamento fácil e o campo estava ótimo.",
+      data: "2 de mar. de 2025"
+    },
+    {
+      nome: "Juliana Souza",
+      inicial: "J",
+      cor: "linear-gradient(135deg,#BE185D,#F9A8D4)",
+      nota: 4,
+      comentario: "Muito boa experiência, recomendo. Os times foram bem divididos e a galera era simpática.",
+      data: "28 de fev. de 2025"
+    }
+  ];
+
+  // nota que o usuario selecionou nas estrelas
+  var notaSelecionada = 0;
+
+  // textos que aparecem pra cada nota
+  var textosPorNota = ["", "Ruim 😕", "Regular 😐", "Bom 🙂", "Muito bom 😄", "Excelente! 🤩"];
+
+  // cores dos avatares dos usuarios na lista
+  var coresDosAvatares = [
+    "linear-gradient(135deg,#2A5FA5,#4A7EC7)",
+    "linear-gradient(135deg,#7C3AED,#A78BFA)",
+    "linear-gradient(135deg,#059669,#34D399)",
+    "linear-gradient(135deg,#DC2626,#F87171)",
+    "linear-gradient(135deg,#D97706,#FCD34D)",
+    "linear-gradient(135deg,#BE185D,#F9A8D4)"
+  ];
+
+  // ─── funcao que calcula a media das notas ───
+  function calcularMedia() {
+    var somaDasNotas = 0;
+    for (var i = 0; i < listaDeAvaliacoes.length; i++) {
+      somaDasNotas = somaDasNotas + listaDeAvaliacoes[i].nota;
+    }
+    var media = somaDasNotas / listaDeAvaliacoes.length;
+    return media;
+  }
+
+  // ─── funcao que conta quantas vezes cada nota aparece ───
+  function contarDistribuicao() {
+    var contagem = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    for (var i = 0; i < listaDeAvaliacoes.length; i++) {
+      var nota = listaDeAvaliacoes[i].nota;
+      contagem[nota] = contagem[nota] + 1;
+    }
+    return contagem;
+  }
+
+  // ─── funcao que gera estrelas em SVG pela nota ───
+  function gerarEstrelasVisuais(nota, tamanho) {
+    var html = "";
+    var notaArredondada = Math.round(nota * 2) / 2; // arredonda pra .5
+
+    for (var i = 1; i <= 5; i++) {
+      var corEstrela = "#E2E8F0"; // vazia
+
+      if (i <= Math.floor(notaArredondada)) {
+        corEstrela = "#F59E0B"; // cheia
+      } else if (i === Math.ceil(notaArredondada) && notaArredondada % 1 !== 0) {
+        corEstrela = "#FBBF24"; // meia (usa um amarelo mais claro)
+      }
+
+      html += '<svg class="estrela-svg" style="width:' + tamanho + 'px;height:' + tamanho + 'px" viewBox="0 0 24 24">';
+      html += '<polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" ';
+      html += 'fill="' + corEstrela + '" stroke="' + corEstrela + '" stroke-width="1"/>';
+      html += '</svg>';
+    }
+    return html;
+  }
+
+  // ─── funcao que atualiza o card do organizador ───
+  function atualizarCardOrganizador() {
+    var media = calcularMedia();
+    var totalAvaliacoes = listaDeAvaliacoes.length;
+    var distribuicao = contarDistribuicao();
+
+    // atualiza a nota em numero
+    document.getElementById("nota-geral").innerText = media.toFixed(1);
+
+    // atualiza as estrelas da media
+    document.getElementById("estrelas-media").innerHTML = gerarEstrelasVisuais(media, 18);
+
+    // atualiza o total de avaliacoes
+    document.getElementById("total-avaliacoes").innerText = totalAvaliacoes + " avaliações";
+
+    // atualiza as barrinhas de distribuicao
+    var htmlDistribuicao = "";
+    for (var numero = 5; numero >= 1; numero--) {
+      var quantidade = distribuicao[numero];
+      var porcentagem = (quantidade / totalAvaliacoes) * 100;
+
+      htmlDistribuicao += '<div class="barra-dist-linha">';
+      htmlDistribuicao += '<span class="barra-dist-numero">' + numero + '</span>';
+      htmlDistribuicao += '<div class="barra-dist-fundo">';
+      htmlDistribuicao += '<div class="barra-dist-preenchida" style="width:' + porcentagem + '%"></div>';
+      htmlDistribuicao += '</div>';
+      htmlDistribuicao += '<span class="barra-dist-qtd">' + quantidade + '</span>';
+      htmlDistribuicao += '</div>';
+    }
+    document.getElementById("distribuicao").innerHTML = htmlDistribuicao;
+  }
+
+  // ─── funcao que renderiza a lista de avaliacoes ───
+  function renderizarAvaliacoes() {
+    var contenedor = document.getElementById("lista-de-avaliacoes");
+    var html = "";
+
+    for (var i = 0; i < listaDeAvaliacoes.length; i++) {
+      var avaliacao = listaDeAvaliacoes[i];
+
+      html += '<div class="cartao-avaliacao' + (i === 0 && avaliacao.nova ? " nova-avaliacao" : "") + '">';
+
+      // linha de topo com foto, nome e data
+      html += '<div class="avaliacao-topo">';
+      html += '<div class="foto-usuario" style="background:' + avaliacao.cor + '">' + avaliacao.inicial + '</div>';
+      html += '<div class="avaliacao-info">';
+      html += '<div class="avaliacao-nome">' + avaliacao.nome + '</div>';
+      html += '<div class="avaliacao-data">' + avaliacao.data + '</div>';
+      html += '</div>';
+      html += '</div>';
+
+      // estrelas da avaliacao
+      html += '<div class="estrelas-avaliacao">';
+      for (var estrela = 1; estrela <= 5; estrela++) {
+        html += '<span class="estrela-avaliacao">' + (estrela <= avaliacao.nota ? "⭐" : "☆") + '</span>';
+      }
+      html += '</div>';
+
+      // comentario
+      html += '<div class="avaliacao-comentario">' + avaliacao.comentario + '</div>';
+      html += '</div>';
+    }
+
+    contenedor.innerHTML = html;
+
+    // atualiza o titulo com a quantidade
+    document.getElementById("titulo-lista").innerText = "Avaliações anteriores (" + listaDeAvaliacoes.length + ")";
+  }
+
+  // ─── logica das estrelas clicaveis ───
+  var todasAsEstrelas = document.querySelectorAll(".estrela-clicavel");
+
+  for (var i = 0; i < todasAsEstrelas.length; i++) {
+    todasAsEstrelas[i].addEventListener("click", function() {
+
+      // pega o valor da estrela clicada
+      notaSelecionada = parseInt(this.getAttribute("data-valor"));
+
+      // acende as estrelas ate a nota selecionada
+      for (var j = 0; j < todasAsEstrelas.length; j++) {
+        var valorDaEstrela = parseInt(todasAsEstrelas[j].getAttribute("data-valor"));
+
+        if (valorDaEstrela <= notaSelecionada) {
+          todasAsEstrelas[j].classList.add("acesa");
+        } else {
+          todasAsEstrelas[j].classList.remove("acesa");
+        }
+      }
+
+      // mostra o texto correspondente a nota
+      document.getElementById("texto-nota").innerText = textosPorNota[notaSelecionada];
+    });
+  }
+
+  // ─── logica do botao de enviar ───
+  document.getElementById("botao-enviar").addEventListener("click", function() {
+
+    var comentario = document.getElementById("campo-comentario").value.trim();
+
+    // verifica se selecionou estrelas
+    if (notaSelecionada === 0) {
+      document.getElementById("texto-nota").innerText = "⚠️ Selecione pelo menos uma estrela";
+      document.getElementById("texto-nota").style.color = "var(--vermelho)";
+      return;
+    }
+
+    // pega a data de hoje formatada
+    var hoje = new Date();
+    var nomesDosMeses = ["jan.", "fev.", "mar.", "abr.", "mai.", "jun.", "jul.", "ago.", "set.", "out.", "nov.", "dez."];
+    var dataFormatada = hoje.getDate() + " de " + nomesDosMeses[hoje.getMonth()] + " de " + hoje.getFullYear();
+
+    // monta o objeto da nova avaliacao
+    var novaAvaliacao = {
+      nome: "Você",
+      inicial: "V",
+      cor: coresDosAvatares[0],
+      nota: notaSelecionada,
+      comentario: comentario !== "" ? comentario : "Sem comentário adicional.",
+      data: dataFormatada,
+      nova: true
+    };
+
+    // adiciona no comeco da lista
+    listaDeAvaliacoes.unshift(novaAvaliacao);
+
+    // atualiza tudo na tela
+    atualizarCardOrganizador();
+    renderizarAvaliacoes();
+
+    // mostra mensagem de sucesso
+    document.getElementById("mensagem-sucesso").style.display = "block";
+
+    // desativa o botao pra nao enviar de novo
+    this.disabled = true;
+    this.innerText = "✅ Avaliação enviada";
+
+    // limpa o formulario
+    document.getElementById("campo-comentario").value = "";
+    document.getElementById("texto-nota").innerText = "Obrigado pela sua avaliação!";
+    document.getElementById("texto-nota").style.color = "var(--verde)";
+
+    // apaga as estrelas selecionadas
+    for (var i = 0; i < todasAsEstrelas.length; i++) {
+      todasAsEstrelas[i].classList.remove("acesa");
+    }
+    notaSelecionada = 0;
+
+    // rola a pagina pra mostrar a nova avaliacao
+    setTimeout(function() {
+      document.getElementById("lista-de-avaliacoes").scrollIntoView({ behavior: "smooth" });
+    }, 500);
+
+  });
+
+  // ─── inicia a pagina ───
+  atualizarCardOrganizador();
+  renderizarAvaliacoes();
+
+</script>
+</body>
+</html>
