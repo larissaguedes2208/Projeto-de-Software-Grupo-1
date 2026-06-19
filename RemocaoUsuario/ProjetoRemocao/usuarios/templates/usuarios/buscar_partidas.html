@@ -1,104 +1,217 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Buscar Partidas</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            padding: 30px;
-        }
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-        h1 {
-            color: #205e9e;
-            text-align: center;
-        }
+    <title>PlayMatch - Buscar partidas</title>
 
-        form {
-            max-width: 700px;
-            margin: 0 auto 25px;
-            display: flex;
-            gap: 10px;
-        }
-
-        input {
-            flex: 1;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            padding: 14px 20px;
-            background: #f45a16;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-        }
-
-        .card {
-            max-width: 700px;
-            margin: 15px auto;
-            background: white;
-            padding: 22px;
-            border-radius: 16px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-        }
-
-        .card h2 {
-            color: #205e9e;
-            margin: 0;
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 10px 16px;
-            border-radius: 10px;
-            background: #205e9e;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .voltar {
-            display: block;
-            text-align: center;
-            margin-top: 25px;
-            color: #205e9e;
-            font-weight: bold;
-            text-decoration: none;
-        }
-    </style>
+    <link
+        rel="stylesheet"
+        href="{% static 'usuarios/style.css' %}"
+    >
 </head>
-<body>
 
-<h1>Buscar Partidas</h1>
+<body class="home-page">
 
-<form method="GET">
-    <input type="text" name="q" placeholder="Buscar por esporte, local, cidade ou status" value="{{ termo }}">
-    <button type="submit">Buscar</button>
-</form>
-
-{% for partida in partidas %}
-    <div class="card">
-        <h2>{{ partida.esporte }}</h2>
-        <p><strong>Local:</strong> {{ partida.local }}</p>
-        <p><strong>Cidade:</strong> {{ partida.cidade }}</p>
-        <p><strong>Data:</strong> {{ partida.data }}</p>
-        <p><strong>Status:</strong> {{ partida.status }}</p>
-
-        <a href="{% url 'confirmar_participacao' %}" class="btn">Ver partida</a>
+<header class="topbar">
+    <div class="logo">
+        Play<span>Match</span>
     </div>
-{% empty %}
-    <p style="text-align:center;">Nenhuma partida encontrada.</p>
-{% endfor %}
 
-<a href="{% url 'listar_partidas' %}" class="voltar">Voltar para início</a>
+    <a
+        href="{% url 'editar_usuario' %}"
+        class="user"
+    >
+        JS
+    </a>
+</header>
+
+<main class="home-container">
+
+    <section class="welcome">
+        <h1>Buscar partidas</h1>
+
+        <p>
+            Pesquise por esporte, local, cidade ou status.
+        </p>
+    </section>
+
+    <form
+        method="GET"
+        class="search-box"
+    >
+        <input
+            type="text"
+            name="q"
+            value="{{ termo }}"
+            placeholder="Ex.: futebol, Copacabana ou aberta"
+        >
+
+        <button type="submit">
+            Buscar
+        </button>
+    </form>
+
+    <section class="filters">
+        <div class="filter active">Todos</div>
+        <div class="filter">⚽ Futebol</div>
+        <div class="filter">🏐 Vôlei</div>
+        <div class="filter">🏀 Basquete</div>
+        <div class="filter">🏖️ Futevôlei</div>
+    </section>
+
+    <section class="section-title">
+        <h2>Resultados</h2>
+    </section>
+
+    {% for partida in partidas %}
+
+        <article class="match-card">
+
+            <div class="match-header">
+                <h3>{{ partida.esporte }}</h3>
+
+                <p>
+                    {{ partida.local }} - {{ partida.cidade }}
+                </p>
+            </div>
+
+            <div class="match-content">
+
+                <div class="tags">
+                    <span class="tag">
+                        {{ partida.esporte }}
+                    </span>
+
+                    {% if partida.status == 'Aberta' %}
+
+                        <span class="tag green">
+                            {{ partida.status }}
+                        </span>
+
+                    {% elif partida.status == 'Cancelada' %}
+
+                        <span class="tag red">
+                            {{ partida.status }}
+                        </span>
+
+                    {% else %}
+
+                        <span class="tag orange">
+                            {{ partida.status }}
+                        </span>
+
+                    {% endif %}
+                </div>
+
+                <p class="info-line">
+                    <strong>📍 Local:</strong>
+                    {{ partida.local }}
+                </p>
+
+                <p class="info-line">
+                    <strong>🏙️ Cidade:</strong>
+                    {{ partida.cidade }}
+                </p>
+
+                <p class="info-line">
+                    <strong>📅 Data:</strong>
+                    {{ partida.data }}
+                </p>
+
+                <p class="info-line">
+                    <strong>⏰ Horário:</strong>
+                    {{ partida.horario }}
+                </p>
+
+                <p class="info-line">
+                    <strong>👥 Número de jogadores:</strong>
+                    {{ partida.num_jogadores }}
+                </p>
+
+                <div class="card-actions">
+
+                    <a
+                        href="{% url 'confirmar_participacao' %}"
+                        class="btn orange"
+                    >
+                        Ver partida
+                    </a>
+
+                    <a
+                        href="{% url 'editar_partida' partida.id %}"
+                        class="btn"
+                    >
+                        Editar
+                    </a>
+
+                    <a
+                        href="{% url 'excluir_partida' partida.id %}"
+                        class="btn red"
+                    >
+                        Excluir
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    {% empty %}
+
+        <section class="empty">
+
+            <p>
+                Nenhuma partida encontrada.
+            </p>
+
+            <a
+                href="{% url 'criar_partida' %}"
+                class="btn orange"
+            >
+                Criar uma partida
+            </a>
+
+        </section>
+
+    {% endfor %}
+
+</main>
+
+<nav class="bottom-nav">
+
+    <a href="{% url 'listar_partidas' %}">
+        🏠
+        <span>Início</span>
+    </a>
+
+    <a
+        href="{% url 'buscar_partidas' %}"
+        class="active"
+    >
+        🔎
+        <span>Buscar</span>
+    </a>
+
+    <a href="{% url 'criar_partida' %}">
+        ➕
+        <span>Criar</span>
+    </a>
+
+    <a href="{% url 'editar_usuario' %}">
+        👤
+        <span>Perfil</span>
+    </a>
+
+</nav>
 
 </body>
 </html>

@@ -1,299 +1,68 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>PlayMatch - Partidas</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
-            padding-bottom: 90px;
-        }
+    <title>PlayMatch - Início</title>
 
-        .topbar {
-            background: white;
-            padding: 18px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: #205e9e;
-        }
-
-        .logo span {
-            color: #f45a16;
-        }
-
-        .user {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: #205e9e;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            text-decoration: none;
-        }
-
-        .container {
-            max-width: 760px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-
-        .welcome {
-            margin-bottom: 20px;
-        }
-
-        .welcome h1 {
-            margin: 0;
-            color: #205e9e;
-            font-size: 28px;
-        }
-
-        .welcome p {
-            color: #666;
-            margin-top: 6px;
-        }
-
-        .actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin: 22px 0;
-        }
-
-        .action-card {
-            background: white;
-            border-radius: 18px;
-            padding: 20px;
-            text-decoration: none;
-            color: #222;
-            box-shadow: 0 5px 16px rgba(0,0,0,0.08);
-            transition: 0.2s;
-        }
-
-        .action-card:hover {
-            transform: translateY(-3px);
-        }
-
-        .action-card strong {
-            display: block;
-            color: #205e9e;
-            margin-bottom: 6px;
-            font-size: 17px;
-        }
-
-        .action-card.orange strong {
-            color: #f45a16;
-        }
-
-        .search-box {
-            background: white;
-            padding: 16px;
-            border-radius: 18px;
-            box-shadow: 0 5px 16px rgba(0,0,0,0.08);
-            margin-bottom: 24px;
-        }
-
-        .search-box a {
-            display: block;
-            text-decoration: none;
-            color: #777;
-            background: #f0f2f5;
-            padding: 14px;
-            border-radius: 14px;
-        }
-
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 26px 0 14px;
-        }
-
-        .section-title h2 {
-            margin: 0;
-            color: #205e9e;
-            font-size: 22px;
-        }
-
-        .section-title a {
-            color: #f45a16;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .filters {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            margin-bottom: 18px;
-        }
-
-        .filter {
-            background: white;
-            color: #205e9e;
-            border-radius: 999px;
-            padding: 10px 16px;
-            font-weight: bold;
-            white-space: nowrap;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-        }
-
-        .match-card {
-            background: white;
-            border-radius: 22px;
-            overflow: hidden;
-            margin-bottom: 18px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.10);
-        }
-
-        .match-header {
-            background: linear-gradient(135deg, #205e9e, #f45a16);
-            color: white;
-            padding: 22px;
-        }
-
-        .match-header h3 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        .match-header p {
-            margin: 6px 0 0;
-            opacity: 0.95;
-        }
-
-        .match-content {
-            padding: 20px;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 14px;
-        }
-
-        .tag {
-            background: #eaf1fb;
-            color: #205e9e;
-            padding: 7px 10px;
-            border-radius: 999px;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .tag.orange {
-            background: #fff0e8;
-            color: #f45a16;
-        }
-
-        .info {
-            margin: 8px 0;
-            color: #444;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 18px;
-        }
-
-        .btn {
-            padding: 11px 15px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            color: white;
-            background: #205e9e;
-        }
-
-        .btn.orange {
-            background: #f45a16;
-        }
-
-        .btn.red {
-            background: #d62828;
-        }
-
-        .empty {
-            text-align: center;
-            background: white;
-            padding: 28px;
-            border-radius: 18px;
-            color: #777;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            box-shadow: 0 -4px 18px rgba(0,0,0,0.12);
-            z-index: 20;
-        }
-
-        .bottom-nav a {
-            text-decoration: none;
-            color: #777;
-            font-weight: bold;
-            font-size: 14px;
-            text-align: center;
-        }
-
-        .bottom-nav a.active {
-            color: #205e9e;
-        }
-    </style>
+    <link
+        rel="stylesheet"
+        href="{% static 'usuarios/style.css' %}"
+    >
 </head>
-<body>
+
+<body class="home-page">
 
 <header class="topbar">
-    <div class="logo">Play<span>Match</span></div>
-    <a href="{% url 'editar_usuario' %}" class="user">JS</a>
+    <div class="logo">
+        Play<span>Match</span>
+    </div>
+
+    <a
+        href="{% url 'editar_usuario' %}"
+        class="user"
+    >
+        JS
+    </a>
 </header>
 
-<main class="container">
+<main class="home-container">
 
     <section class="welcome">
         <h1>Bom dia, João 👋</h1>
-        <p>Encontre uma partida perto de você ou crie uma nova.</p>
+
+        <p>
+            Encontre uma partida perto de você ou crie uma nova.
+        </p>
     </section>
 
     <section class="actions">
-        <a href="{% url 'criar_partida' %}" class="action-card orange">
+
+        <a
+            href="{% url 'criar_partida' %}"
+            class="action-card orange"
+        >
             <strong>Criar partida</strong>
+
             Monte um jogo com local, data e horário.
         </a>
 
-        <a href="{% url 'buscar_partidas' %}" class="action-card">
+        <a
+            href="{% url 'buscar_partidas' %}"
+            class="action-card"
+        >
             <strong>Buscar partidas</strong>
+
             Procure por esporte, cidade ou status.
         </a>
+
     </section>
 
     <section class="search-box">
@@ -303,6 +72,7 @@
     </section>
 
     <section class="filters">
+        <div class="filter active">Todos</div>
         <div class="filter">⚽ Futebol</div>
         <div class="filter">🏐 Vôlei</div>
         <div class="filter">🏀 Basquete</div>
@@ -311,49 +81,152 @@
 
     <section class="section-title">
         <h2>Partidas sugeridas</h2>
-        <a href="{% url 'criar_partida' %}">+ Criar</a>
+
+        <a href="{% url 'criar_partida' %}">
+            + Criar
+        </a>
     </section>
 
     {% for partida in partidas %}
-        <div class="match-card">
+
+        <article class="match-card">
+
             <div class="match-header">
                 <h3>{{ partida.esporte }}</h3>
-                <p>{{ partida.local }} - {{ partida.cidade }}</p>
+
+                <p>
+                    {{ partida.local }} - {{ partida.cidade }}
+                </p>
             </div>
 
             <div class="match-content">
+
                 <div class="tags">
-                    <span class="tag">{{ partida.esporte }}</span>
-                    <span class="tag orange">{{ partida.status }}</span>
+                    <span class="tag">
+                        {{ partida.esporte }}
+                    </span>
+
+                    {% if partida.status == 'Aberta' %}
+
+                        <span class="tag green">
+                            {{ partida.status }}
+                        </span>
+
+                    {% elif partida.status == 'Cancelada' %}
+
+                        <span class="tag red">
+                            {{ partida.status }}
+                        </span>
+
+                    {% else %}
+
+                        <span class="tag orange">
+                            {{ partida.status }}
+                        </span>
+
+                    {% endif %}
                 </div>
 
-                <p class="info"><strong>📍 Local:</strong> {{ partida.local }}</p>
-                <p class="info"><strong>🏙️ Cidade:</strong> {{ partida.cidade }}</p>
-                <p class="info"><strong>📅 Data:</strong> {{ partida.data }}</p>
-                <p class="info"><strong>⏰ Horário:</strong> {{ partida.horario }}</p>
-                <p class="info"><strong>👥 Jogadores:</strong> {{ partida.num_jogadores }}</p>
+                <p class="info-line">
+                    <strong>📍 Local:</strong>
+                    {{ partida.local }}
+                </p>
+
+                <p class="info-line">
+                    <strong>🏙️ Cidade:</strong>
+                    {{ partida.cidade }}
+                </p>
+
+                <p class="info-line">
+                    <strong>📅 Data:</strong>
+                    {{ partida.data }}
+                </p>
+
+                <p class="info-line">
+                    <strong>⏰ Horário:</strong>
+                    {{ partida.horario }}
+                </p>
+
+                <p class="info-line">
+                    <strong>👥 Número de jogadores:</strong>
+                    {{ partida.num_jogadores }}
+                </p>
 
                 <div class="card-actions">
-                    <a href="{% url 'confirmar_participacao' %}" class="btn orange">Ver partida</a>
-                    <a href="{% url 'editar_partida' partida.id %}" class="btn">Editar</a>
-                    <a href="{% url 'excluir_partida' partida.id %}" class="btn red">Excluir</a>
+
+                    <a
+                        href="{% url 'confirmar_participacao' %}"
+                        class="btn orange"
+                    >
+                        Ver partida
+                    </a>
+
+                    <a
+                        href="{% url 'editar_partida' partida.id %}"
+                        class="btn"
+                    >
+                        Editar
+                    </a>
+
+                    <a
+                        href="{% url 'excluir_partida' partida.id %}"
+                        class="btn red"
+                    >
+                        Excluir
+                    </a>
+
                 </div>
+
             </div>
-        </div>
+
+        </article>
+
     {% empty %}
-        <div class="empty">
-            <p>Nenhuma partida cadastrada ainda.</p>
-            <a href="{% url 'criar_partida' %}" class="btn orange">Criar primeira partida</a>
-        </div>
+
+        <section class="empty">
+
+            <p>
+                Nenhuma partida cadastrada ainda.
+            </p>
+
+            <a
+                href="{% url 'criar_partida' %}"
+                class="btn orange"
+            >
+                Criar primeira partida
+            </a>
+
+        </section>
+
     {% endfor %}
 
 </main>
 
 <nav class="bottom-nav">
-    <a href="{% url 'listar_partidas' %}" class="active">Início</a>
-    <a href="{% url 'buscar_partidas' %}">Mapa</a>
-    <a href="{% url 'criar_partida' %}">Criar</a>
-    <a href="{% url 'editar_usuario' %}">Perfil</a>
+
+    <a
+        href="{% url 'listar_partidas' %}"
+        class="active"
+    >
+        🏠
+        <span>Início</span>
+    </a>
+
+    <a href="{% url 'buscar_partidas' %}">
+        🔎
+        <span>Buscar</span>
+    </a>
+
+    <a href="{% url 'criar_partida' %}">
+        ➕
+        <span>Criar</span>
+    </a>
+
+    <a href="{% url 'editar_usuario' %}">
+        👤
+        <span>Perfil</span>
+    </a>
+
 </nav>
 
 </body>

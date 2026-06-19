@@ -1,31 +1,69 @@
 
 
+
+:root {
+    --azul: #205e9e;
+    --azul-claro: #2f6fa8;
+    --laranja: #f45a16;
+    --vermelho: #d62828;
+    --verde: #20b26b;
+
+    --fundo-claro: #eef5f7;
+    --branco: #ffffff;
+    --texto: #222222;
+    --texto-claro: #666666;
+    --borda: #dddddd;
+
+    --sombra: 0 10px 30px rgba(0, 0, 0, 0.15);
+    --raio: 18px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     min-height: 100vh;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--texto);
 
     background: linear-gradient(
         135deg,
-        #205e9e 0%,
-        #2f6fa8 45%,
-        #f45a16 100%
+        var(--azul) 0%,
+        var(--azul-claro) 45%,
+        var(--laranja) 100%
     );
 
     background-attachment: fixed;
+    padding-bottom: 90px;
 }
+
+a {
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+}
+
+p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+
 
 
 .header {
     padding: 40px 20px 120px;
     text-align: center;
-    color: white;
+    color: var(--branco);
 }
 
 .header h1 {
@@ -39,29 +77,23 @@ body {
 }
 
 
+/* ==================================================
+   3. CONTAINER GERAL E CARDS
+   ================================================== */
 
 .container {
     width: 90%;
     max-width: 430px;
-
-    margin: -70px auto 100px auto;
+    margin: -70px auto 100px;
 }
-
-
 
 .card {
-    background: white;
-
+    background: var(--branco);
     border-radius: 22px;
-
     padding: 25px;
-
     margin-bottom: 20px;
-
-    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    box-shadow: var(--sombra);
 }
-
-
 
 .card h2 {
     font-size: 28px;
@@ -69,203 +101,181 @@ body {
 }
 
 .info {
-    color: #666;
+    color: var(--texto-claro);
     margin-bottom: 10px;
 }
 
-
-
 .badge {
     display: inline-block;
+    padding: 6px 14px;
+    margin-bottom: 15px;
 
     background: #e7f0fb;
-
-    color: #205e9e;
-
-    padding: 6px 14px;
+    color: var(--azul);
 
     border-radius: 20px;
-
     font-size: 13px;
-
     font-weight: bold;
-
-    margin-bottom: 15px;
 }
 
 
+/* ==================================================
+   4. FORMULÁRIOS
+   ================================================== */
 
 label {
     display: block;
-
     margin-top: 15px;
-
     margin-bottom: 8px;
-
     font-weight: bold;
 }
 
 input,
-select {
+select,
+textarea {
     width: 100%;
-
     padding: 14px;
 
-    border: 1px solid #ddd;
-
+    border: 1px solid var(--borda);
     border-radius: 14px;
 
     background: #f5f5f7;
+    color: var(--texto);
 
+    font-family: inherit;
     font-size: 15px;
+
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--azul);
+    background: var(--branco);
+    box-shadow: 0 0 0 3px rgba(32, 94, 158, 0.12);
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
 }
 
 
+/* ==================================================
+   5. BOTÕES
+   ================================================== */
 
 button,
 .btn {
     display: block;
-
     width: 100%;
 
     margin-top: 20px;
-
     padding: 14px;
 
     border: none;
-
     border-radius: 14px;
 
-    background: #205e9e;
+    background: var(--azul);
+    color: var(--branco);
 
-    color: white;
-
+    font-family: inherit;
     font-size: 16px;
-
     font-weight: bold;
 
     text-align: center;
-
     text-decoration: none;
 
     cursor: pointer;
-
-    transition: 0.2s;
+    transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
 }
 
 button:hover,
 .btn:hover {
-    opacity: 0.9;
+    opacity: 0.92;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-.btn-laranja {
-    background: #f45a16;
+button:active,
+.btn:active {
+    transform: translateY(0);
 }
 
-
-
-p {
-    margin-bottom: 10px;
-
-    line-height: 1.5;
+.btn-laranja,
+.btn.orange {
+    background: var(--laranja);
 }
 
-
-
-.bottom-nav {
-    position: fixed;
-
-    bottom: 0;
-
-    left: 0;
-
-    right: 0;
-
-    height: 70px;
-
-    background: white;
-
-    border-top: 1px solid #ddd;
-
-    display: flex;
-
-    justify-content: space-around;
-
-    align-items: center;
-
-    box-shadow: 0 -5px 15px rgba(0,0,0,0.08);
+.btn-vermelho,
+.btn.red {
+    background: var(--vermelho);
 }
 
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    box-shadow: 0 -4px 18px rgba(0,0,0,0.10);
-    z-index: 20;
+.btn-verde,
+.btn.green {
+    background: var(--verde);
 }
 
-.bottom-nav a {
-    color: #205e9e;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 700;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
+.btn-secundario {
+    background: transparent;
+    color: var(--azul);
+    border: 2px solid var(--azul);
 }
 
 
+/* ==================================================
+   6. PERFIL
+   ================================================== */
 
 .profile {
-    text-align: center;
-
-    color: white;
-
     margin-bottom: 20px;
+    text-align: center;
+    color: var(--branco);
 }
 
 .profile img {
     width: 90px;
     height: 90px;
+    margin-bottom: 10px;
 
     border-radius: 50%;
+    object-fit: cover;
 
-    margin-bottom: 10px;
+    border: 4px solid rgba(255, 255, 255, 0.8);
 }
 
 
+/* ==================================================
+   7. PÁGINA INICIAL / LISTAR PARTIDAS
+   ================================================== */
 
-@media (max-width: 500px) {
-
-    .header h1 {
-        font-size: 30px;
-    }
-
-    .card h2 {
-        font-size: 24px;
-    }
-.home-page {
-    background: #eef5f7;
+body.home-page {
+    background: var(--fundo-claro);
+    background-attachment: initial;
 }
 
 .topbar {
-    height: 60px;
-    background: white;
+    min-height: 68px;
+    padding: 10px 24px;
+
+    background: var(--branco);
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 28%;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+
+    position: sticky;
+    top: 0;
+    z-index: 30;
 }
 
 .topbar strong {
-    color: #111;
+    color: #111111;
     font-size: 20px;
 }
 
@@ -273,9 +283,44 @@ p {
     font-weight: bold;
 }
 
+.logo {
+    color: var(--azul);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: var(--laranja);
+}
+
+.logo-playmatch {
+    width: 170px;
+    height: auto;
+    display: block;
+}
+
+.user,
+.user-avatar {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: var(--azul);
+    color: var(--branco);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+    text-decoration: none;
+}
+
 .home-container {
+    width: 90%;
     max-width: 760px;
-    margin: 35px auto 80px;
+    margin: 35px auto 100px;
 }
 
 .home-container h1 {
@@ -283,66 +328,232 @@ p {
     margin-bottom: 5px;
 }
 
-.subtitle {
-    color: #777;
+.welcome {
+    margin-bottom: 20px;
+}
+
+.welcome h1 {
+    color: var(--azul);
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.subtitle,
+.welcome p {
+    color: #777777;
     margin-bottom: 25px;
 }
 
+
+/* ==================================================
+   8. AÇÕES DA PÁGINA INICIAL
+   ================================================== */
+
+.actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 22px 0;
+}
+
+.action-card {
+    padding: 20px;
+
+    background: var(--branco);
+    color: var(--texto);
+
+    border-radius: 18px;
+    text-decoration: none;
+
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
+    transition: 0.2s;
+}
+
+.action-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.action-card strong {
+    display: block;
+    margin-bottom: 6px;
+
+    color: var(--azul);
+    font-size: 17px;
+}
+
+.action-card.orange strong {
+    color: var(--laranja);
+}
+
+
+/* ==================================================
+   9. CAMPO DE BUSCA
+   ================================================== */
+
 .search-box {
-    background: white;
-    border-radius: 30px;
-    padding: 16px 22px;
+    padding: 14px 20px;
     margin-bottom: 25px;
+
+    background: var(--branco);
+    border-radius: 30px;
+
     display: flex;
     align-items: center;
     gap: 10px;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 .search-box input {
+    flex: 1;
+
+    padding: 4px;
+
     border: none;
     background: transparent;
-    outline: none;
+    box-shadow: none;
+
     font-size: 16px;
-    width: 100%;
 }
+
+.search-box input:focus {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+}
+
+.search-box a {
+    width: 100%;
+    color: #777777;
+    text-decoration: none;
+}
+
+
+/* ==================================================
+   10. FILTROS
+   ================================================== */
 
 .filters {
     display: flex;
     gap: 12px;
-    overflow-x: auto;
+
     margin-bottom: 30px;
+    padding-bottom: 4px;
+
+    overflow-x: auto;
+    scrollbar-width: thin;
 }
 
-.filters button {
+.filters button,
+.filter {
     width: auto;
     margin: 0;
-    padding: 12px 22px;
+    padding: 11px 20px;
+
     border-radius: 25px;
-    background: white;
-    color: #333;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+    background: var(--branco);
+    color: #333333;
+
+    white-space: nowrap;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.filters button:first-child {
-    background: #205e9e;
-    color: white;
+.filters button:first-child,
+.filter.active {
+    background: var(--azul);
+    color: var(--branco);
 }
+
+
+/* ==================================================
+   11. TÍTULOS DE SEÇÃO
+   ================================================== */
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 26px 0 14px;
+}
+
+.section-title h2 {
+    color: var(--azul);
+    font-size: 22px;
+}
+
+.section-title a {
+    color: var(--laranja);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+/* ==================================================
+   12. CARDS DE PARTIDAS
+   ================================================== */
 
 .match-card {
-    background: white;
-    border-radius: 24px;
-    overflow: hidden;
     margin-bottom: 30px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.14);
+
+    background: var(--branco);
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.14);
 }
+
+.match-card:hover {
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+
+/* Cabeçalho em gradiente usado em alguns cards */
+
+.match-header {
+    padding: 22px;
+
+    background: linear-gradient(
+        135deg,
+        var(--azul),
+        var(--laranja)
+    );
+
+    color: var(--branco);
+}
+
+.match-header h3 {
+    margin-bottom: 6px;
+    font-size: 24px;
+}
+
+.match-header p {
+    margin: 0;
+    opacity: 0.95;
+}
+
+.match-content {
+    padding: 22px;
+}
+
+
+/* Cabeçalho com imagem usado nos cards antigos */
 
 .match-img {
     height: 220px;
+    padding: 24px;
+
     background-size: cover;
     background-position: center;
+
+    color: var(--branco);
+
     position: relative;
-    color: white;
-    padding: 24px;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -350,59 +561,57 @@ p {
 
 .match-img::before {
     content: "";
+
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.75));
+
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.12),
+        rgba(0, 0, 0, 0.78)
+    );
 }
 
-.match-img * {
+.match-img > * {
     position: relative;
     z-index: 1;
 }
 
 .futebol-img {
-    background-image: url("https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=1000&q=80");
+    background-image: url(
+        "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=1000&q=80"
+    );
 }
 
 .basquete-img {
-    background-image: url("https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=1000&q=80");
+    background-image: url(
+        "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=1000&q=80"
+    );
 }
 
-.tags {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.tags span {
-    background: white;
-    color: #111;
-    padding: 7px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.tags .orange {
-    background: #f45a16;
-    color: white;
-}
-
-.tags .green {
-    background: #20b26b;
-    color: white;
-    margin-left: auto;
+.volei-img {
+    background-image: url(
+        "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=1000&q=80"
+    );
 }
 
 .match-img h2 {
     font-size: 24px;
 }
 
+
+/* Informações das partidas */
+
 .match-info {
     padding: 22px;
+
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+}
+
+.match-info p {
+    margin: 0;
 }
 
 .price {
@@ -410,22 +619,277 @@ p {
     font-weight: bold;
 }
 
+.info-line {
+    margin: 8px 0;
+    color: #444444;
+}
+
+
+/* ==================================================
+   13. TAGS
+   ================================================== */
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin-bottom: 14px;
+}
+
+.tags span,
+.tag {
+    padding: 7px 14px;
+
+    background: #eaf1fb;
+    color: var(--azul);
+
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.tags .orange,
+.tag.orange {
+    background: var(--laranja);
+    color: var(--branco);
+}
+
+.tags .green,
+.tag.green {
+    background: var(--verde);
+    color: var(--branco);
+}
+
+.tags .red,
+.tag.red {
+    background: var(--vermelho);
+    color: var(--branco);
+}
+
+
+/* ==================================================
+   14. PROGRESSO DE JOGADORES
+   ================================================== */
+
 .progress-text {
-    grid-column: 1 / 3;
+    grid-column: 1 / -1;
+
     display: flex;
     justify-content: space-between;
-    color: #555;
+
+    color: #555555;
 }
 
 .progress {
-    grid-column: 1 / 3;
+    grid-column: 1 / -1;
+
     height: 8px;
+
     background: #e5e5e5;
     border-radius: 10px;
+
     overflow: hidden;
 }
 
 .progress div {
     height: 100%;
-    background: #f45a16;
+    background: var(--laranja);
+    border-radius: 10px;
 }
+
+
+/* ==================================================
+   15. AÇÕES DOS CARDS
+   ================================================== */
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+.card-actions .btn {
+    width: auto;
+    flex: 1;
+
+    margin-top: 0;
+    padding: 11px 15px;
+}
+
+
+/* ==================================================
+   16. MENSAGEM DE LISTA VAZIA
+   ================================================== */
+
+.empty {
+    padding: 28px;
+
+    background: var(--branco);
+    color: #777777;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
+}
+
+.empty .btn {
+    max-width: 260px;
+    margin: 18px auto 0;
+}
+
+
+/* ==================================================
+   17. BARRA DE NAVEGAÇÃO INFERIOR
+   ================================================== */
+
+.bottom-nav {
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    min-height: 70px;
+    padding: 10px 0;
+
+    background: var(--branco);
+    border-top: 1px solid var(--borda);
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.08);
+
+    z-index: 50;
+}
+
+.bottom-nav a {
+    padding: 6px 12px;
+
+    color: var(--azul);
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+
+    border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+.bottom-nav a:hover,
+.bottom-nav a.active {
+    background: #eaf1fb;
+    color: var(--azul);
+}
+
+
+/* ==================================================
+   18. RESPONSIVIDADE
+   ================================================== */
+
+@media (max-width: 700px) {
+    .home-container {
+        width: 92%;
+        margin-top: 24px;
+    }
+
+    .home-container h1,
+    .welcome h1 {
+        font-size: 28px;
+    }
+
+    .actions {
+        grid-template-columns: 1fr;
+    }
+
+    .match-info {
+        grid-template-columns: 1fr;
+    }
+
+    .price {
+        text-align: left;
+    }
+
+    .progress-text,
+    .progress {
+        grid-column: 1;
+    }
+
+    .topbar {
+        padding: 10px 16px;
+    }
+
+    .logo-playmatch {
+        width: 140px;
+    }
+}
+
+@media (max-width: 500px) {
+    .header {
+        padding: 32px 16px 105px;
+    }
+
+    .header h1 {
+        font-size: 30px;
+    }
+
+    .header p {
+        font-size: 16px;
+    }
+
+    .container {
+        width: 92%;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .card h2 {
+        font-size: 24px;
+    }
+
+    .match-img {
+        height: 190px;
+        padding: 18px;
+    }
+
+    .match-img h2 {
+        font-size: 21px;
+    }
+
+    .match-content,
+    .match-info {
+        padding: 18px;
+    }
+
+    .card-actions {
+        flex-direction: column;
+    }
+
+    .card-actions .btn {
+        width: 100%;
+    }
+
+    .bottom-nav a {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+    .progress-80 {
+    width: 80%;
+}
+}
+

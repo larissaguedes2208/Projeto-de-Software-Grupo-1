@@ -1,72 +1,186 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Excluir Partida</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #205e9e, #f45a16);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-        .container {
-            max-width: 480px;
-            background: white;
-            padding: 35px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
+    <title>PlayMatch - Editar partida</title>
 
-        h1 {
-            color: #d62828;
-        }
-
-        p {
-            font-size: 17px;
-        }
-
-        button {
-            padding: 14px 22px;
-            background: #d62828;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        a {
-            display: block;
-            margin-top: 18px;
-            color: #205e9e;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
+    <link
+        rel="stylesheet"
+        href="{% static 'usuarios/style.css' %}"
+    >
 </head>
+
 <body>
 
-<div class="container">
-    <h1>Excluir partida</h1>
+<header class="header">
+    <h1>Editar partida</h1>
 
-    <p>Tem certeza que deseja excluir a partida de <strong>{{ partida.esporte }}</strong>?</p>
-    <p>{{ partida.local }} - {{ partida.cidade }}</p>
+    <p>
+        Altere as informações necessárias.
+    </p>
+</header>
 
-    <form method="POST">
-        {% csrf_token %}
-        <button type="submit">Sim, excluir partida</button>
-    </form>
+<main class="container">
 
-    <a href="{% url 'listar_partidas' %}">Cancelar</a>
-</div>
+    <section class="card">
+        <span class="badge">
+            Partida #{{ partida.id }}
+        </span>
+
+        <h2>{{ partida.esporte }}</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="esporte">
+                Esporte
+            </label>
+
+            <input
+                type="text"
+                id="esporte"
+                name="esporte"
+                value="{{ partida.esporte }}"
+                required
+            >
+
+            <label for="local">
+                Local
+            </label>
+
+            <input
+                type="text"
+                id="local"
+                name="local"
+                value="{{ partida.local }}"
+                required
+            >
+
+            <label for="cidade">
+                Cidade
+            </label>
+
+            <input
+                type="text"
+                id="cidade"
+                name="cidade"
+                value="{{ partida.cidade }}"
+                required
+            >
+
+            <label for="data">
+                Data
+            </label>
+
+            <input
+                type="date"
+                id="data"
+                name="data"
+                value="{{ partida.data|date:'Y-m-d' }}"
+                required
+            >
+
+            <label for="horario">
+                Horário
+            </label>
+
+            <input
+                type="time"
+                id="horario"
+                name="horario"
+                value="{{ partida.horario|time:'H:i' }}"
+                required
+            >
+
+            <label for="num_jogadores">
+                Número de jogadores
+            </label>
+
+            <input
+                type="number"
+                id="num_jogadores"
+                name="num_jogadores"
+                min="2"
+                value="{{ partida.num_jogadores }}"
+                required
+            >
+
+            <label for="status">
+                Status
+            </label>
+
+            <select
+                id="status"
+                name="status"
+            >
+                <option
+                    value="Aberta"
+                    {% if partida.status == 'Aberta' %}selected{% endif %}
+                >
+                    Aberta
+                </option>
+
+                <option
+                    value="Lotada"
+                    {% if partida.status == 'Lotada' %}selected{% endif %}
+                >
+                    Lotada
+                </option>
+
+                <option
+                    value="Cancelada"
+                    {% if partida.status == 'Cancelada' %}selected{% endif %}
+                >
+                    Cancelada
+                </option>
+            </select>
+
+            <button type="submit">
+                Salvar alterações
+            </button>
+        </form>
+
+        <a
+            href="{% url 'listar_partidas' %}"
+            class="btn btn-secundario"
+        >
+            Cancelar e voltar
+        </a>
+    </section>
+
+</main>
+
+<nav class="bottom-nav">
+
+    <a href="{% url 'listar_partidas' %}">
+        🏠
+        <span>Início</span>
+    </a>
+
+    <a href="{% url 'buscar_partidas' %}">
+        🔎
+        <span>Buscar</span>
+    </a>
+
+    <a href="{% url 'criar_partida' %}">
+        ➕
+        <span>Criar</span>
+    </a>
+
+    <a href="{% url 'editar_usuario' %}">
+        👤
+        <span>Perfil</span>
+    </a>
+
+</nav>
 
 </body>
 </html>
