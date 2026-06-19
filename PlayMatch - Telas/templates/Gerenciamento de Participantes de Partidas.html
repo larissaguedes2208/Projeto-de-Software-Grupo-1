@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlayMatch - Gerenciamento de Participantes</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --azul: #2A5FA5;
+      --azul-escuro: #1E4580;
+      --azul-claro: #4A7EC7;
+      --laranja: #F26419;
+      --verde: #22C55E;
+      --vermelho: #EF4444;
+      --fundo: #F4F6FA;
+      --branco: #FFFFFF;
+      --texto: #1A202C;
+      --cinza: #718096;
+      --borda: #E2E8F0;
+      --sombra: 0 14px 30px rgba(30, 69, 128, .12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      background: var(--fundo);
+      color: var(--texto);
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: var(--fundo);
+      padding-bottom: 95px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--azul-escuro), var(--azul), var(--azul-claro));
+      color: white;
+      padding: 24px 20px 34px;
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      background: rgba(255,255,255,.12);
+      border-radius: 50%;
+      right: -70px;
+      top: -70px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.16);
+      color: white;
+      border-radius: 15px;
+      font-size: 22px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .icon-btn:active {
+      transform: scale(.95);
+    }
+
+    .badge-top {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 24px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.15);
+      font-size: 12px;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge-top span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--laranja);
+    }
+
+    h1 {
+      margin-top: 14px;
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 800;
+      position: relative;
+      z-index: 2;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      font-size: 14px;
+      color: rgba(255,255,255,.82);
+      font-weight: 500;
+      position: relative;
+      z-index: 2;
+    }
+
+    main {
+      padding: 0 16px 24px;
+      margin-top: -18px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .card {
+      background: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 24px;
+      box-shadow: var(--sombra);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .match-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sport {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sport-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--laranja), #ff8b45);
+      color: white;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      box-shadow: 0 10px 20px rgba(242,100,25,.25);
+    }
+
+    .sport h2 {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .sport p {
+      font-size: 12px;
+      color: var(--cinza);
+      font-weight: 600;
+    }
+
+    .lotada {
+      display: none;
+      background: var(--vermelho);
+      color: white;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      animation: pop .3s ease;
+    }
+
+    .lotada.show {
+      display: inline-flex;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .info {
+      background: #F8FAFD;
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 12px;
+    }
+
+    .info small {
+      color: var(--cinza);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .info strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .capacity {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 9px;
+    }
+
+    .capacity span:first-child {
+      color: var(--cinza);
+    }
+
+    .bar {
+      height: 12px;
+      background: #E8EEF7;
+      border-radius: 999px;
+      padding: 2px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 80%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--azul), var(--azul-claro));
+      transition: .35s;
+    }
+
+    .bar-fill.full {
+      background: linear-gradient(90deg, var(--vermelho), #ff7c7c);
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .section-title h3 {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .section-title p {
+      margin-top: 3px;
+      color: var(--cinza);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .count {
+      background: #EAF1FA;
+      color: var(--azul-escuro);
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 14px 8px;
+      border-radius: 18px;
+      background: #F8FAFD;
+      border: 1px solid var(--borda);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 21px;
+      color: var(--azul-escuro);
+      font-weight: 800;
+    }
+
+    .stat:nth-child(2) strong {
+      color: var(--laranja);
+    }
+
+    .stat:nth-child(3) strong {
+      color: var(--verde);
+    }
+
+    .stat.full strong {
+      color: var(--vermelho);
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 4px;
+      color: var(--cinza);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .search {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .search input {
+      width: 100%;
+      height: 48px;
+      border-radius: 16px;
+      border: 1px solid var(--borda);
+      background: #F8FAFD;
+      padding: 0 14px 0 42px;
+      outline: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--texto);
+    }
+
+    .search input:focus {
+      border-color: var(--azul);
+      box-shadow: 0 0 0 4px rgba(42,95,165,.1);
+      background: white;
+    }
+
+    .search span {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      transform: translateY(-50%);
+      color: var(--cinza);
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: #EEF3FA;
+      padding: 5px;
+      border-radius: 18px;
+    }
+
+    .filter {
+      height: 36px;
+      border-radius: 13px;
+      border: none;
+      background: transparent;
+      color: var(--cinza);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .filter.active {
+      background: white;
+      color: var(--azul-escuro);
+      box-shadow: 0 8px 16px rgba(30,69,128,.1);
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 20px;
+      background: #FBFCFE;
+      border: 1px solid var(--borda);
+      transition: .25s;
+      animation: enter .3s ease;
+    }
+
+    .person:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 22px rgba(30,69,128,.08);
+    }
+
+    .person.remove {
+      opacity: 0;
+      transform: translateX(20px) scale(.97);
+    }
+
+    .avatar {
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
+      border-radius: 17px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      background: linear-gradient(135deg, var(--azul), var(--azul-claro));
+    }
+
+    .avatar.orange {
+      background: linear-gradient(135deg, var(--laranja), #ff8b45);
+    }
+
+    .avatar.green {
+      background: linear-gradient(135deg, #16A34A, var(--verde));
+    }
+
+    .avatar.dark {
+      background: linear-gradient(135deg, var(--azul-escuro), var(--azul));
+    }
+
+    .person-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .person-info h4 {
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .chip {
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0 8px;
+      font-size: 10px;
+      font-weight: 800;
+      background: #EAF1FA;
+      color: var(--azul-escuro);
+    }
+
+    .chip.beginner {
+      background: #FFF4DF;
+      color: #7C4A00;
+    }
+
+    .chip.advanced {
+      background: #E0F2FE;
+      color: #075985;
+    }
+
+    .chip.confirmed {
+      background: #DCFCE7;
+      color: #166534;
+    }
+
+    .chip.rating {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .mini {
+      min-width: 74px;
+      height: 32px;
+      border-radius: 12px;
+      border: none;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .mini:active {
+      transform: scale(.95);
+    }
+
+    .approve {
+      background: var(--verde);
+      color: white;
+    }
+
+    .reject {
+      background: #FEE2E2;
+      color: var(--vermelho);
+    }
+
+    .mini:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .empty {
+      display: none;
+      text-align: center;
+      padding: 22px 12px;
+      border: 1px dashed rgba(113,128,150,.35);
+      border-radius: 20px;
+      background: #F8FAFD;
+      color: var(--cinza);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .empty.show {
+      display: block;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 95px;
+      transform: translate(-50%, 20px);
+      width: calc(100% - 32px);
+      max-width: 398px;
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      box-shadow: 0 18px 38px rgba(30,69,128,.18);
+      padding: 13px 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s;
+      z-index: 20;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .toast-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--verde);
+      font-weight: 800;
+    }
+
+    .toast.error .toast-icon {
+      background: var(--vermelho);
+    }
+
+    .toast.warning .toast-icon {
+      background: var(--laranja);
+    }
+
+    .toast strong {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .toast p {
+      margin-top: 2px;
+      color: var(--cinza);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      height: 82px;
+      background: rgba(255,255,255,.95);
+      border-top: 1px solid var(--borda);
+      box-shadow: 0 -12px 28px rgba(30,69,128,.1);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 9px 12px 12px;
+      z-index: 10;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      text-decoration: none;
+      color: var(--cinza);
+      border-radius: 18px;
+      font-size: 10px;
+      font-weight: 800;
+      transition: .2s;
+    }
+
+    .nav span {
+      font-size: 20px;
+    }
+
+    .nav.active {
+      background: #EAF1FA;
+      color: var(--azul);
+    }
+
+    .nav.create span {
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(135deg, var(--laranja), #ff8b45);
+      color: white;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+    }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(.85);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 360px) {
+      h1 {
+        font-size: 23px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mini {
+        min-width: 66px;
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-top">
+        <button class="icon-btn">‹</button>
+        <button class="icon-btn">⋯</button>
+      </div>
+
+      <div class="badge-top">
+        <span></span>
+        Organização da partida
+      </div>
+
+      <h1>Gerenciamento de Participantes</h1>
+      <p class="subtitle">Controle quem entra e participa da sua pelada</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="match-head">
+          <div class="sport">
+            <div class="sport-icon">⚽</div>
+            <div>
+              <h2>Futebol Society</h2>
+              <p>Pelada semanal</p>
+            </div>
+          </div>
+
+          <div class="lotada" id="fullBadge">Partida Lotada</div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info">
+            <small>Esporte</small>
+            <strong>Futebol</strong>
+          </div>
+
+          <div class="info">
+            <small>Local</small>
+            <strong>Arena Play Norte</strong>
+          </div>
+
+          <div class="info">
+            <small>Data</small>
+            <strong>23/06/2026</strong>
+          </div>
+
+          <div class="info">
+            <small>Horário</small>
+            <strong>19:30</strong>
+          </div>
+
+          <div class="info">
+            <small>Organizador</small>
+            <strong>Carlos Mendes</strong>
+          </div>
+
+          <div class="info">
+            <small>Vagas</small>
+            <strong id="capacityText">8 de 10</strong>
+          </div>
+        </div>
+
+        <div class="capacity">
+          <span>Quantidade de vagas</span>
+          <span id="capacityText2">8 de 10 participantes</span>
+        </div>
+
+        <div class="bar">
+          <div class="bar-fill" id="progressFill"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title">
+          <div>
+            <h3>Estatísticas</h3>
+            <p>Resumo atualizado da partida</p>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <strong id="confirmedStat">8</strong>
+            <span>Confirmados</span>
+          </div>
+
+          <div class="stat">
+            <strong id="pendingStat">5</strong>
+            <span>Pendentes</span>
+          </div>
+
+          <div class="stat" id="remainingBox">
+            <strong id="remainingStat">2</strong>
+            <span>Vagas Restantes</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="search">
+          <span>🔎</span>
+          <input type="search" id="searchInput" placeholder="Buscar participante" />
+        </div>
+
+        <div class="filters">
+          <button class="filter active" data-filter="all">Todos</button>
+          <button class="filter" data-filter="confirmed">Confirmados</button>
+          <button class="filter" data-filter="pending">Pendentes</button>
+        </div>
+      </section>
+
+      <section class="card" id="confirmedSection">
+        <div class="section-title">
+          <div>
+            <h3>Participantes Confirmados</h3>
+            <p>Atletas com presença garantida</p>
+          </div>
+          <span class="count" id="confirmedCount">8</span>
+        </div>
+
+        <div class="list" id="confirmedList"></div>
+        <div class="empty" id="confirmedEmpty">Nenhum participante confirmado encontrado.</div>
+      </section>
+
+      <section class="card" id="pendingSection">
+        <div class="section-title">
+          <div>
+            <h3>Solicitações para Entrar</h3>
+            <p>Analise quem quer participar</p>
+          </div>
+          <span class="count" id="pendingCount">5</span>
+        </div>
+
+        <div class="list" id="pendingList"></div>
+        <div class="empty" id="pendingEmpty">Nenhuma solicitação pendente encontrada.</div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast">
+      <div class="toast-icon">✓</div>
+      <div>
+        <strong id="toastTitle">Tudo certo</strong>
+        <p id="toastMessage">Ação concluída com sucesso.</p>
+      </div>
+    </div>
+
+    <nav class="bottom-nav">
+      <a href="#" class="nav">
+        <span>⌂</span>
+        Início
+      </a>
+
+      <a href="#" class="nav">
+        <span>⌖</span>
+        Mapa
+      </a>
+
+      <a href="#" class="nav create">
+        <span>+</span>
+        Criar
+      </a>
+
+      <a href="#" class="nav active">
+        <span>◉</span>
+        Avisos
+      </a>
+
+      <a href="#" class="nav">
+        <span>☺</span>
+        Perfil
+      </a>
+    </nav>
+  </div>
+
+  <script>
+    const LIMITE = 10;
+
+    let filtroAtual = "all";
+    let buscaAtual = "";
+    let toastTimeout = null;
+
+    const participantes = [
+      { id: 1, nome: "João Silva", nivel: "Intermediário", cor: "dark" },
+      { id: 2, nome: "Pedro Santos", nivel: "Avançado", cor: "green" },
+      { id: 3, nome: "Lucas Ferreira", nivel: "Intermediário", cor: "" },
+      { id: 4, nome: "Rafael Costa", nivel: "Iniciante", cor: "orange" },
+      { id: 5, nome: "Bruno Almeida", nivel: "Avançado", cor: "dark" },
+      { id: 6, nome: "Mateus Rocha", nivel: "Intermediário", cor: "" },
+      { id: 7, nome: "Felipe Martins", nivel: "Iniciante", cor: "orange" },
+      { id: 8, nome: "Gustavo Lima", nivel: "Avançado", cor: "green" }
+    ];
+
+    const solicitacoes = [
+      { id: 101, nome: "André Nogueira", nivel: "Intermediário", avaliacao: 4.8, cor: "" },
+      { id: 102, nome: "Caio Ribeiro", nivel: "Avançado", avaliacao: 4.9, cor: "green" },
+      { id: 103, nome: "Diego Moura", nivel: "Iniciante", avaliacao: 4.5, cor: "orange" },
+      { id: 104, nome: "Marcos Teixeira", nivel: "Intermediário", avaliacao: 4.7, cor: "dark" },
+      { id: 105, nome: "Thiago Barbosa", nivel: "Avançado", avaliacao: 4.6, cor: "" }
+    ];
+
+    const confirmedList = document.getElementById("confirmedList");
+    const pendingList = document.getElementById("pendingList");
+    const searchInput = document.getElementById("searchInput");
+    const confirmedSection = document.getElementById("confirmedSection");
+    const pendingSection = document.getElementById("pendingSection");
+    const confirmedEmpty = document.getElementById("confirmedEmpty");
+    const pendingEmpty = document.getElementById("pendingEmpty");
+    const confirmedCount = document.getElementById("confirmedCount");
+    const pendingCount = document.getElementById("pendingCount");
+    const confirmedStat = document.getElementById("confirmedStat");
+    const pendingStat = document.getElementById("pendingStat");
+    const remainingStat = document.getElementById("remainingStat");
+    const remainingBox = document.getElementById("remainingBox");
+    const progressFill = document.getElementById("progressFill");
+    const fullBadge = document.getElementById("fullBadge");
+    const capacityText = document.getElementById("capacityText");
+    const capacityText2 = document.getElementById("capacityText2");
+    const toast = document.getElementById("toast");
+    const toastTitle = document.getElementById("toastTitle");
+    const toastMessage = document.getElementById("toastMessage");
+
+    function normalizar(texto) {
+      return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function iniciais(nome) {
+      return nome
+        .split(" ")
+        .slice(0, 2)
+        .map(parte => parte[0])
+        .join("")
+        .toUpperCase();
+    }
+
+    function classeNivel(nivel) {
+      const texto = normalizar(nivel);
+
+      if (texto.includes("iniciante")) return "beginner";
+      if (texto.includes("avancado")) return "advanced";
+
+      return "";
+    }
+
+    function partidaLotada() {
+      return participantes.length >= LIMITE;
+    }
+
+    function vagasRestantes() {
+      return Math.max(LIMITE - participantes.length, 0);
+    }
+
+    function mostrarToast(tipo, titulo, mensagem) {
+      clearTimeout(toastTimeout);
+
+      toast.className = "toast " + tipo;
+      toastTitle.textContent = titulo;
+      toastMessage.textContent = mensagem;
+      toast.classList.add("show");
+
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2600);
+    }
+
+    function filtrarLista(lista) {
+      const busca = normalizar(buscaAtual.trim());
+
+      if (!busca) return lista;
+
+      return lista.filter(item => normalizar(item.nome).includes(busca));
+    }
+
+    function criarCardConfirmado(pessoa) {
+      return `
+        <article class="person" data-id="${pessoa.id}">
+          <div class="avatar ${pessoa.cor}">${iniciais(pessoa.nome)}</div>
+
+          <div class="person-info">
+            <h4>${pessoa.nome}</h4>
+            <div class="chips">
+              <span class="chip ${classeNivel(pessoa.nivel)}">${pessoa.nivel}</span>
+              <span class="chip confirmed">Confirmado</span>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function criarCardPendente(pessoa) {
+      const lotada = partidaLotada();
+
+      return `
+        <article class="person" data-id="${pessoa.id}">
+          <div class="avatar ${pessoa.cor}">${iniciais(pessoa.nome)}</div>
+
+          <div class="person-info">
+            <h4>${pessoa.nome}</h4>
+            <div class="chips">
+              <span class="chip ${classeNivel(pessoa.nivel)}">${pessoa.nivel}</span>
+              <span class="chip rating">Nota ${pessoa.avaliacao.toFixed(1)}</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="mini approve" data-action="approve" data-id="${pessoa.id}" ${lotada ? "disabled" : ""}>
+              ${lotada ? "Lotada" : "Aprovar"}
+            </button>
+
+            <button class="mini reject" data-action="reject" data-id="${pessoa.id}">
+              Recusar
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function atualizarEstatisticas() {
+      const totalConfirmados = participantes.length;
+      const totalPendentes = solicitacoes.length;
+      const vagas = vagasRestantes();
+      const porcentagem = Math.min((totalConfirmados / LIMITE) * 100, 100);
+      const lotada = partidaLotada();
+
+      confirmedCount.textContent = totalConfirmados;
+      pendingCount.textContent = totalPendentes;
+      confirmedStat.textContent = totalConfirmados;
+      pendingStat.textContent = totalPendentes;
+      remainingStat.textContent = vagas;
+
+      capacityText.textContent = `${totalConfirmados} de ${LIMITE}`;
+      capacityText2.textContent = `${totalConfirmados} de ${LIMITE} participantes`;
+
+      progressFill.style.width = porcentagem + "%";
+      progressFill.classList.toggle("full", lotada);
+      fullBadge.classList.toggle("show", lotada);
+      remainingBox.classList.toggle("full", vagas === 0);
+    }
+
+    function renderizar() {
+      const mostrarConfirmados = filtroAtual === "all" || filtroAtual === "confirmed";
+      const mostrarPendentes = filtroAtual === "all" || filtroAtual === "pending";
+
+      const confirmadosFiltrados = filtrarLista(participantes);
+      const pendentesFiltrados = filtrarLista(solicitacoes);
+
+      confirmedSection.style.display = mostrarConfirmados ? "block" : "none";
+      pendingSection.style.display = mostrarPendentes ? "block" : "none";
+
+      confirmedList.innerHTML = confirmadosFiltrados.map(criarCardConfirmado).join("");
+      pendingList.innerHTML = pendentesFiltrados.map(criarCardPendente).join("");
+
+      confirmedEmpty.classList.toggle("show", mostrarConfirmados && confirmadosFiltrados.length === 0);
+      pendingEmpty.classList.toggle("show", mostrarPendentes && pendentesFiltrados.length === 0);
+
+      atualizarEstatisticas();
+    }
+
+    function aprovarParticipante(id) {
+      if (partidaLotada()) {
+        mostrarToast("warning", "Partida lotada", "O limite de 10 participantes já foi atingido.");
+        return;
+      }
+
+      const index = solicitacoes.findIndex(pessoa => pessoa.id === id);
+      if (index === -1) return;
+
+      const pessoa = solicitacoes[index];
+      const card = pendingList.querySelector(`[data-id="${id}"]`);
+
+      if (card) card.classList.add("remove");
+
+      setTimeout(() => {
+        solicitacoes.splice(index, 1);
+
+        participantes.push({
+          id: pessoa.id,
+          nome: pessoa.nome,
+          nivel: pessoa.nivel,
+          cor: pessoa.cor
+        });
+
+        renderizar();
+
+        mostrarToast("success", "Participante aprovado", `${pessoa.nome} entrou na lista de confirmados.`);
+
+        if (partidaLotada()) {
+          setTimeout(() => {
+            mostrarToast("warning", "Partida lotada", "Todas as vagas foram preenchidas.");
+          }, 500);
+        }
+      }, 230);
+    }
+
+    function recusarParticipante(id) {
+      const index = solicitacoes.findIndex(pessoa => pessoa.id === id);
+      if (index === -1) return;
+
+      const pessoa = solicitacoes[index];
+      const card = pendingList.querySelector(`[data-id="${id}"]`);
+
+      if (card) card.classList.add("remove");
+
+      setTimeout(() => {
+        solicitacoes.splice(index, 1);
+        renderizar();
+        mostrarToast("error", "Solicitação recusada", `${pessoa.nome} foi removido da fila.`);
+      }, 230);
+    }
+
+    searchInput.addEventListener("input", function () {
+      buscaAtual = this.value;
+      renderizar();
+    });
+
+    document.querySelectorAll(".filter").forEach(botao => {
+      botao.addEventListener("click", () => {
+        filtroAtual = botao.dataset.filter;
+
+        document.querySelectorAll(".filter").forEach(item => item.classList.remove("active"));
+        botao.classList.add("active");
+
+        renderizar();
+      });
+    });
+
+    pendingList.addEventListener("click", event => {
+      const botao = event.target.closest("button");
+      if (!botao) return;
+
+      const id = Number(botao.dataset.id);
+      const acao = botao.dataset.action;
+
+      if (acao === "approve") aprovarParticipante(id);
+      if (acao === "reject") recusarParticipante(id);
+    });
+
+    document.querySelectorAll(".nav").forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+
+        document.querySelectorAll(".nav").forEach(item => item.classList.remove("active"));
+        link.classList.add("active");
+      });
+    });
+
+    renderizar();
+  </script>
+</body>
+</html>
