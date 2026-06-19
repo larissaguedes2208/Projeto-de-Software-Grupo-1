@@ -74,4 +74,323 @@
     <div class="nav-centro">
       <div class="nav-criar-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-             stroke-linecap="round
+             stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </div>
+      <span class="nav-rotulo" style="color:var(--azul);font-weight:700;">Criar</span>
+    </div>
+
+    <div class="nav-item ativo">
+      <div class="ponto-aviso-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="ponto-aviso-nav" id="ponto-nav"></span>
+      </div>
+      <span class="nav-rotulo" style="color:var(--azul);">Avisos</span>
+    </div>
+
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span class="nav-rotulo">Perfil</span>
+    </div>
+
+  </nav>
+
+</div>
+
+<script>
+  var todasAsNotificacoes = [
+    {
+      id: 1,
+      tipo: "jogador",
+      classeIcone: "tipo-jogador",
+      emoji: "👤",
+      titulo: "Novo jogador entrou na pelada!",
+      descricao: "Pedro Gaya aceitou seu convite e entrou na partida de Futebol no Leblon.",
+      horario: "Agora mesmo",
+      lida: false
+    },
+    {
+      id: 2,
+      tipo: "confirma",
+      classeIcone: "tipo-confirma",
+      emoji: "✅",
+      titulo: "Partida confirmada!",
+      descricao: "Sua pelada de Futebol na Quadra do Leblon no sábado às 19h está confirmada.",
+      horario: "5 min atrás",
+      lida: false
+    },
+    {
+      id: 3,
+      tipo: "vaga",
+      classeIcone: "tipo-vaga",
+      emoji: "🔥",
+      titulo: "Última vaga disponível!",
+      descricao: "Só resta 1 vaga na pelada de Futevôlei na Praia de Ipanema hoje às 16h.",
+      horario: "12 min atrás",
+      lida: false
+    },
+    {
+      id: 4,
+      tipo: "convite",
+      classeIcone: "tipo-convite",
+      emoji: "🎯",
+      titulo: "Você foi convidado para uma pelada!",
+      descricao: "Maria Clara te convidou para jogar Vôlei na Arena Copacabana amanhã às 18h.",
+      horario: "30 min atrás",
+      lida: false
+    },
+    {
+      id: 5,
+      tipo: "lembrete",
+      classeIcone: "tipo-lembrete",
+      emoji: "⏰",
+      titulo: "Lembrete: partida em 2 horas!",
+      descricao: "Sua partida de Basquete na Quadra do Flamengo começa às 17h. Não esqueça da água!",
+      horario: "1 hora atrás",
+      lida: false
+    },
+    {
+      id: 6,
+      tipo: "jogador",
+      classeIcone: "tipo-jogador",
+      emoji: "👤",
+      titulo: "Ana Lima entrou na sua pelada",
+      descricao: "Agora você tem 8 jogadores confirmados na partida de Futebol. Faltam 2!",
+      horario: "2 horas atrás",
+      lida: true
+    },
+    {
+      id: 7,
+      tipo: "cancela",
+      classeIcone: "tipo-cancela",
+      emoji: "❌",
+      titulo: "Partida cancelada pelo organizador",
+      descricao: "A pelada de Tênis no Clube Tijuca da terça às 08h foi cancelada. Verifique novas datas.",
+      horario: "3 horas atrás",
+      lida: true
+    },
+    {
+      id: 8,
+      tipo: "vaga",
+      classeIcone: "tipo-vaga",
+      emoji: "🏆",
+      titulo: "Vaga preenchida com sucesso!",
+      descricao: "Você entrou com sucesso na pelada de Futevôlei na Praia de Ipanema. Boa sorte!",
+      horario: "Ontem, 18:45",
+      lida: true
+    },
+    {
+      id: 9,
+      tipo: "lembrete",
+      classeIcone: "tipo-lembrete",
+      emoji: "⏰",
+      titulo: "Não esqueça da sua pelada amanhã!",
+      descricao: "Futebol Avançado na Arena Botafogo às 20h. Chegue 15 min antes para o aquecimento.",
+      horario: "Ontem, 20:00",
+      lida: true
+    },
+    {
+      id: 10,
+      tipo: "convite",
+      classeIcone: "tipo-convite",
+      emoji: "🎯",
+      titulo: "Lucas Oliveira te mandou um convite",
+      descricao: "Convite para jogar Vôlei de Praia no Recreio no domingo às 9h. 6 jogadores confirmados.",
+      horario: "Ontem, 14:30",
+      lida: true
+    },
+    {
+      id: 11,
+      tipo: "confirma",
+      classeIcone: "tipo-confirma",
+      emoji: "✅",
+      titulo: "Avaliação recebida!",
+      descricao: "João Silva avaliou sua participação com 5 estrelas. Continue assim!",
+      horario: "2 dias atrás",
+      lida: true
+    }
+  ];
+
+  var filtroAtivo = "todas";
+
+  function contarNaoLidas() {
+    var contador = 0;
+    for (var i = 0; i < todasAsNotificacoes.length; i++) {
+      if (todasAsNotificacoes[i].lida === false) {
+        contador = contador + 1;
+      }
+    }
+    return contador;
+  }
+
+  function atualizarCabecalho() {
+    var quantidadeNaoLidas = contarNaoLidas();
+    var badgeEl = document.getElementById("badge-nao-lidas");
+    var subtituloEl = document.getElementById("subtitulo-cabecalho");
+    var resumoEl = document.getElementById("texto-resumo");
+    var botaoMarcarEl = document.getElementById("botao-marcar-todas");
+    var pontoNavEl = document.getElementById("ponto-nav");
+
+    badgeEl.innerText = quantidadeNaoLidas;
+    if (quantidadeNaoLidas === 0) {
+      badgeEl.classList.add("zerado");
+      pontoNavEl.style.display = "none";
+      botaoMarcarEl.disabled = true;
+    } else {
+      badgeEl.classList.remove("zerado");
+      pontoNavEl.style.display = "block";
+      botaoMarcarEl.disabled = false;
+    }
+
+    if (quantidadeNaoLidas === 0) {
+      subtituloEl.innerText = "Tudo em dia! 🎉";
+    } else if (quantidadeNaoLidas === 1) {
+      subtituloEl.innerText = "1 notificação não lida";
+    } else {
+      subtituloEl.innerText = quantidadeNaoLidas + " notificações não lidas";
+    }
+
+    var totalNotificacoes = todasAsNotificacoes.length;
+    if (quantidadeNaoLidas === 0) {
+      resumoEl.innerHTML = "Todas as <strong>" + totalNotificacoes + "</strong> foram lidas";
+    } else {
+      resumoEl.innerHTML = "<strong>" + quantidadeNaoLidas + "</strong> de " + totalNotificacoes + " não lidas";
+    }
+  }
+
+  function gerarHtmlNotificacao(notificacao, indice) {
+    var classeLida = notificacao.lida ? "lida" : "nao-lida";
+    var delayAnimacao = (indice * 0.05) + "s";
+
+    var html = '<div class="notificacao ' + classeLida + ' entrando" ';
+    html += 'id="notificacao-' + notificacao.id + '" ';
+    html += 'style="animation-delay:' + delayAnimacao + '" ';
+    html += 'onclick="clicarNaNotificacao(' + notificacao.id + ')">';
+
+    html += '<div class="icone-notificacao ' + notificacao.classeIcone + '">';
+    html += '<span style="font-size:20px">' + notificacao.emoji + '</span>';
+    html += '</div>';
+
+    html += '<div class="corpo-notificacao">';
+    html += '<div class="titulo-notificacao">' + notificacao.titulo + '</div>';
+    html += '<div class="descricao-notificacao">' + notificacao.descricao + '</div>';
+    html += '<div class="horario-notificacao">🕐 ' + notificacao.horario + '</div>';
+    html += '</div>';
+
+    html += '<div class="ponto-nao-lida"></div>';
+
+    html += '</div>';
+    return html;
+  }
+
+  function renderizarNotificacoes() {
+    var contenedor = document.getElementById("lista-notificacoes");
+    contenedor.innerHTML = "";
+
+    var listaFiltrada = [];
+    for (var i = 0; i < todasAsNotificacoes.length; i++) {
+      var notificacao = todasAsNotificacoes[i];
+
+      if (filtroAtivo === "todas") {
+        listaFiltrada.push(notificacao);
+      } else if (filtroAtivo === "nao-lidas" && notificacao.lida === false) {
+        listaFiltrada.push(notificacao);
+      } else if (filtroAtivo === "lidas" && notificacao.lida === true) {
+        listaFiltrada.push(notificacao);
+      }
+    }
+
+    if (listaFiltrada.length === 0) {
+      var mensagemVazia = "";
+      if (filtroAtivo === "nao-lidas") {
+        mensagemVazia = '<div class="aviso-vazio"><div class="emoji-vazio">🎉</div><div class="titulo-vazio">Tudo lido por aqui!</div><div class="descricao-vazio">Você não tem notificações não lidas no momento.</div></div>';
+      } else if (filtroAtivo === "lidas") {
+        mensagemVazia = '<div class="aviso-vazio"><div class="emoji-vazio">📭</div><div class="titulo-vazio">Nenhuma notificação lida</div><div class="descricao-vazio">As notificações que você ler aparecem aqui.</div></div>';
+      } else {
+        mensagemVazia = '<div class="aviso-vazio"><div class="emoji-vazio">🔔</div><div class="titulo-vazio">Sem notificações</div><div class="descricao-vazio">Você não tem notificações ainda.</div></div>';
+      }
+      contenedor.innerHTML = mensagemVazia;
+      return;
+    }
+
+    var htmlFinal = "";
+    for (var j = 0; j < listaFiltrada.length; j++) {
+      htmlFinal = htmlFinal + gerarHtmlNotificacao(listaFiltrada[j], j);
+    }
+    contenedor.innerHTML = htmlFinal;
+  }
+
+  function clicarNaNotificacao(idDaNotificacao) {
+    var elementoNaTela = document.getElementById("notificacao-" + idDaNotificacao);
+
+    for (var i = 0; i < todasAsNotificacoes.length; i++) {
+      if (todasAsNotificacoes[i].id === idDaNotificacao) {
+
+        if (todasAsNotificacoes[i].lida === true) {
+          return;
+        }
+
+        todasAsNotificacoes[i].lida = true;
+
+        if (elementoNaTela !== null) {
+          elementoNaTela.classList.remove("nao-lida");
+          elementoNaTela.classList.add("lida");
+          elementoNaTela.classList.add("lendo");
+
+          setTimeout(function() {
+            if (elementoNaTela !== null) {
+              elementoNaTela.classList.remove("lendo");
+            }
+          }, 400);
+        }
+
+        break;
+      }
+    }
+
+    atualizarCabecalho();
+
+    if (filtroAtivo === "nao-lidas") {
+      setTimeout(function() {
+        renderizarNotificacoes();
+      }, 350);
+    }
+  }
+
+  function marcarTodasComoLidas() {
+    for (var i = 0; i < todasAsNotificacoes.length; i++) {
+      todasAsNotificacoes[i].lida = true;
+    }
+
+    atualizarCabecalho();
+    renderizarNotificacoes();
+  }
+
+  function trocarFiltro(nomeFiltro) {
+    filtroAtivo = nomeFiltro;
+
+    var botoesFiltro = document.querySelectorAll(".filtro-btn");
+    for (var i = 0; i < botoesFiltro.length; i++) {
+      botoesFiltro[i].classList.remove("ativo");
+    }
+
+    document.getElementById("filtro-" + nomeFiltro).classList.add("ativo");
+
+    renderizarNotificacoes();
+  }
+
+  atualizarCabecalho();
+  renderizarNotificacoes();
+</script>
+</body>
+</html>
